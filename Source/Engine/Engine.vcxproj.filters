@@ -15,9 +15,15 @@
     <Filter Include="Source\Math">
       <UniqueIdentifier>{a2f96add-0a44-4b28-b83c-db11657338ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Math\Renderer">
+      <UniqueIdentifier>{20715e02-2650-434f-b53b-c2aa056f9435}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Renderer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -33,6 +39,12 @@
     </ClInclude>
     <ClInclude Include="Core\File.h">
       <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Renderer.h">
+      <Filter>Source\Math\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector2.h">
+      <Filter>Source\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
