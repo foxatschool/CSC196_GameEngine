@@ -4,6 +4,7 @@
 #include "Renderer\Renderer.h"
 #include "Math\Vector2.h"
 #include "Core/Time.h"
+#include "Input\InputSystem.h"
 #include <vector>
 
 int main(int argc, char* argv[]) {
@@ -11,9 +12,11 @@ int main(int argc, char* argv[]) {
 	shovel::Time time;
 
     shovel::Renderer renderer;
+    shovel::InputSystem input;
 
     renderer.init();
 	renderer.CreateWindow("Shovel Engine", 1280, 1024);
+    input.Initialize();
 
     SDL_Event e;
     bool quit = false;
@@ -22,12 +25,12 @@ int main(int argc, char* argv[]) {
     SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
     //Create Stars
-    std::vector<vec2> stars;
+    std::vector<shovel::vec2> stars;
     for (int i = 0; i < 100; i++)
     {
-        stars.push_back(vec2{ shovel::random::getRandomFloat() * 1280, shovel::random::getRandomFloat() * 1024 });
+        stars.push_back(shovel::vec2{ shovel::random::getRandomFloat() * 1280, shovel::random::getRandomFloat() * 1024 });
     }
-    vec2 v(30, 40);
+    shovel::vec2 v(30, 40);
 
     //Main loop
     while (!quit) 
@@ -40,12 +43,22 @@ int main(int argc, char* argv[]) {
                 quit = true;
             }
         }
+		input.Update();
+
+        if (input.GetKeyHeld(SDL_SCANCODE_A)) 
+        {
+			std::cout << "A key pressed!" << std::endl;
+        }
+
+        shovel::vec2 mouse = input.GetMousePosition();
+		std::cout << "Mouse Position: " << mouse.x << ", " << mouse.y << std::endl;
+
 		renderer.setColor(0, 0, 0);
 		renderer.Clear();
 
-        vec2 speed{ 40.0f, 0.0f };
+        shovel::vec2 speed{ 40.0f, 0.0f };
         float lenght = speed.Length();
-        for (vec2& star : stars)
+        for (shovel::vec2& star : stars)
         {
 			star += speed * time.GetDeltaTime();
 			if (star[0] > 1280) star[0] = 0;
