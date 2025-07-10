@@ -6,6 +6,7 @@
 #include "Core/Time.h"
 #include "Input\InputSystem.h"
 #include <vector>
+#include <fmod.hpp>
 
 int main(int argc, char* argv[]) {
 	bool stop = false;
@@ -13,6 +14,7 @@ int main(int argc, char* argv[]) {
 
     shovel::Renderer renderer;
     shovel::InputSystem input;
+    std::vector<shovel::vec2> points;
 
     renderer.init();
 	renderer.CreateWindow("Shovel Engine", 1280, 1024);
@@ -43,28 +45,38 @@ int main(int argc, char* argv[]) {
                 quit = true;
             }
         }
+        // Update engine systems
 		input.Update();
 
-        if (input.GetKeyHeld(SDL_SCANCODE_A)) 
+        //Get Input
+        
+        if (input.GetMouseButtonPresed(shovel::InputSystem::MouseButton::LEFT))
         {
-			std::cout << "A key pressed!" << std::endl;
+            points.push_back(input.GetMousePosition());
+        }
+
+        if (input.GetMouseButtonDown(shovel::InputSystem::MouseButton::LEFT)) {
+            shovel::vec2 position = input.GetMousePosition();
+            if (points.size() == 0) points.push_back(position);
+            else if ((position - points.back()).Length() > 10) points.push_back(position);
         }
 
         shovel::vec2 mouse = input.GetMousePosition();
-		std::cout << "Mouse Position: " << mouse.x << ", " << mouse.y << std::endl;
 
-		renderer.setColor(0, 0, 0);
-		renderer.Clear();
+        renderer.setColor(0, 0, 0);
+        renderer.Clear();
 
-        shovel::vec2 speed{ 40.0f, 0.0f };
-        float lenght = speed.Length();
-        for (shovel::vec2& star : stars)
+        // Draw
+        for (int i = 0; i < (int)points.size() - 1; i++) 
         {
-			star += speed * time.GetDeltaTime();
-			if (star[0] > 1280) star[0] = 0;
-            renderer.setColor(shovel::random::getRandomInt(255), shovel::random::getRandomInt(255), shovel::random::getRandomInt(255), shovel::random::getRandomInt(255));
-			renderer.drawPoint(star.x, star.y);
+            // set color or random color
+            renderer.setColor(255, 255, 255);
+            renderer.drawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         }
+
+        
+
+
         renderer.present(); // Render the screen
     }
 	renderer.shutDown();

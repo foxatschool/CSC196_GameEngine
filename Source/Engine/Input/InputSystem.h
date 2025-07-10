@@ -6,6 +6,14 @@
 namespace shovel {
     class InputSystem {
     public:
+        enum class MouseButton : uint8_t
+        {
+            LEFT,
+            MIDDLE,
+            RIGHT
+        };
+
+    public:
         InputSystem() = default;
 
         bool Initialize();
@@ -25,10 +33,10 @@ namespace shovel {
 		const vec2& GetPrevMousePosition() const { return m_prevMousePosition; }
 
 		//Mouse Input
-        bool GetMouseButtonDown(uint8_t button) const { assert(button < 3); return m_mouseButtonState[button]; }
-        bool GetPreviousMouseButtonDown(uint8_t button) const { assert(button < 3); return m_prevmouseButtonState[button]; }
-        bool GetMouseButtonPresed(uint8_t button) const { return !m_prevMouseButtonState[button] && m_mouseButtonState[button]; }
-        bool GetMouseButtonRealeased(uint8_t button) const { return m_prevMouseButtonState[button] && !m_mouseButtonState[button]; }
+        bool GetMouseButtonDown(MouseButton button) const { return m_mouseButtonState[(uint8_t)button]; }
+        bool GetPreviousMouseButtonDown(MouseButton button) const { return m_prevMouseButtonState[(uint8_t)button]; }
+        bool GetMouseButtonPresed(MouseButton button) const { return !m_prevMouseButtonState[(uint8_t)button] && m_mouseButtonState[(uint8_t)button]; }
+        bool GetMouseButtonRealeased(MouseButton button) const { return m_prevMouseButtonState[(uint8_t)button] && !m_mouseButtonState[(uint8_t)button]; }
 
 	private:
         std::vector<bool> m_keyboardState;
