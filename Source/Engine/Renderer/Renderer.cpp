@@ -48,6 +48,11 @@ namespace shovel
         SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
     }
 
+    void Renderer::setColor(float r, float g, float b, float a)
+    {
+        SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
+    }
+
     void Renderer::Clear()
     {
         SDL_RenderClear(m_renderer);

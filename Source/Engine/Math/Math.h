@@ -2,33 +2,32 @@
 #include <algorithm>
 #include <cmath>
 
-namespace shovel
+namespace shovel::math
 {
-	namespace math
+
+	constexpr float pi = 3.1415926535897932384626433832795f;
+	constexpr float twoPi = 2 * pi;
+	constexpr float halfPi = pi / 2;
+
+	constexpr float radToDeg(float rad)
 	{
-
-		constexpr float pi = 3.1415926535897932384626433832795f;
-		constexpr float twoPi = 2 * pi;
-		constexpr float halfPi = pi / 2;
-
-		constexpr float radToDeg(float rad)
-		{
-			return rad * (180 / pi);
-		}
-
-		constexpr float degTorad(float deg)
-		{
-			return deg * (pi / 180);
-		}
-
-		using std::min;
-		using std::max;
-		using std::clamp;
-		using std::sqrt;
-		using std::sqrtf;
-		using std::sin;
-		using std::sinf;
-		using std::cos;
-		using std::cosf;
+		return rad * (180 / pi);
 	}
+
+	constexpr float degTorad(float deg)
+	{
+		return deg * (pi / 180);
+	}
+
+	using std::min;
+	using std::max;
+	using std::clamp;
+	using std::sqrt;
+	using std::sqrtf;
+	using std::sin;
+	using std::sinf;
+	using std::cos;
+	using std::cosf;
+	using std::atan2;
+	using std::atan2f;
 }
