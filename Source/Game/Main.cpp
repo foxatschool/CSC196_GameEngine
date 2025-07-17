@@ -8,12 +8,16 @@
 #include "Renderer\Model.h"
 #include "Math\Transform.h"
 #include "../Game/Actor.h"
+#include "../Game/Scene.h"
+
+#include "Game/Player.h"
 
 
 #include <SDL3/SDL.h>
 #include <iostream>
 #include <vector>
 #include <fmod.hpp>
+#include <memory>
 
 int main(int argc, char* argv[]) {
     union delta_t
@@ -26,36 +30,35 @@ int main(int argc, char* argv[]) {
 	bool stop = false;
 	shovel::Time time;
 
-    shovel::Renderer renderer;
-    renderer.init();
-    renderer.CreateWindow("Shovel Engine", 1280, 1024);
+    std::unique_ptr<shovel::Renderer> renderer = std::make_unique<shovel::Renderer>();
+    renderer->Init();
+    renderer->CreateWindow("Shovel Engine", 1280, 1024);
 
-    shovel::InputSystem input;
-    input.Initialize();
+    std::unique_ptr<shovel::InputSystem> input = std::make_unique<shovel::InputSystem>();
+    input->Initialize();
     //std::vector<shovel::vec2> points;
     std::vector<FMOD::Sound*> sounds;
 
 
     // create audio system
-	shovel::AudioSystem audioSystem;
-	audioSystem.Init();
+	std::unique_ptr<shovel::AudioSystem> audioSystem = std::make_unique<shovel::AudioSystem>();
+	audioSystem->Init();
     FMOD::Sound* sound = nullptr;
 
 	// Initialize Sounds
-	audioSystem.AddSound("bass.wav", "bass");
-	audioSystem.AddSound("snare.wav", "snare");
-    audioSystem.AddSound("close-hat.wav", "chihat");
-    audioSystem.AddSound("open-hat.wav", "ohihat");
-    audioSystem.AddSound("clap.wav", "clap");
-    audioSystem.AddSound("cowbell.wav", "cowbell");
-    audioSystem.AddSound("snare.wav", "snare");
+	/*
+    audioSystem->AddSound("bass.wav", "bass");
+	audioSystem->AddSound("snare.wav", "snare");
+    audioSystem->AddSound("close-hat.wav", "chihat");
+    audioSystem->AddSound("open-hat.wav", "ohihat");
+    audioSystem->AddSound("clap.wav", "clap");
+    audioSystem->AddSound("cowbell.wav", "cowbell");
+    */
 
 
     SDL_Event e;
     bool quit = false;
 
-    // Define a rectangle
-    SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
     //Create Stars
     std::vector<shovel::vec2> stars;
@@ -70,22 +73,22 @@ int main(int argc, char* argv[]) {
         {-5, -5},
         {5, -5},
         {5, 5},
-        {-5, 5}
+        {-5, 5},
+        {-5, -5}
     };
 
-    shovel::Model* model = new shovel::Model{ points, {0,0, 1} };
+    std::shared_ptr<shovel::Model> model = std::make_shared<shovel::Model>(points, shovel::vec3{ 0,0, 1 });
 
-    std::vector<shovel::Actor> actors;
+    shovel::Scene scene;
     for (int i = 0; i < 15; i++)
     {
         shovel::Transform transform{ shovel::vec2{shovel::random::getRandomFloat() * 1280, shovel::random::getRandomFloat() * 1024}, 0, 20};
-        shovel::Actor actor{ transform, model };
-        actors.push_back(actor);
+        std::unique_ptr<Player> player = std::make_unique<Player>(transform, model);
+        scene.AddActor(std::move(player));
     }
 
-    //shovel::Model model{ points, {0, 0, 1} };
+    //Main loop\\
 
-    //Main loop
     while (!quit) 
     {
 		time.Tick();
@@ -97,95 +100,78 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        if (input.GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
+        if (input->GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         // Update engine systems
-		input.Update();
-		audioSystem.Update();
+		input->Update();
+		audioSystem->Update();
 
-        //Get Input
-        
-        if (input.GetMouseButtonPresed(shovel::InputSystem::MouseButton::LEFT))
+        //Get Input//
+        shovel::vec2 mouse = input->GetMousePosition();
+
+        /*for (auto& actor : actors)
         {
-            points.push_back(input.GetMousePosition());
+            actor->Draw(*renderer);
         }
+        */
 
-        if (input.GetMouseButtonDown(shovel::InputSystem::MouseButton::LEFT)) {
-            shovel::vec2 position = input.GetMousePosition();
-            if (points.size() == 0) points.push_back(position);
-            else if ((position - points.back()).Length() > 10) points.push_back(position);
-        }
-
-        shovel::vec2 mouse = input.GetMousePosition();
-
-        float zero = 0;
-
-        renderer.setColor(1.0f, 0.0f, 1.0f);
-        renderer.Clear();
-
-        //model.Draw(renderer, input.GetMousePosition(), shovel::math::halfPi * 0.5f, 10.0f);
-        for (auto actor : actors)
-        {
-            actor.Draw(renderer);
-        }
-        
-
-        //if (input.GetKeyDown(SDL_SCANCODE_A)) transform.rotation += shovel::math::degTorad(90 * time.GetDeltaTime());
-        //if (input.GetKeyDown(SDL_SCANCODE_D)) transform.rotation -= shovel::math::degTorad(90 * time.GetDeltaTime());
-
+        //Movement
         float Tspeed = 100;
 
         shovel::vec2 direction{ 0,0 };
-        if (input.GetKeyDown(SDL_SCANCODE_W)) direction.y = - 1 * time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_A)) direction.y = 1 * time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_S)) direction.x = -1 * time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_D)) direction.x = 1 * time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_W)) direction.y = - 1 * time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_A)) direction.y = 1 * time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_S)) direction.x = -1 * time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_D)) direction.x = 1 * time.GetDeltaTime();
 
         if (direction.LengthSqr() > 0)
         {
             direction = direction.Normalized();
-            for (auto actor : actors)
+            /*for (auto& actor : actors)
             {
-                actor.GetTransform().position += (direction * Tspeed) * time.GetDeltaTime();
-            }
+                actor->GetTransform().position += (direction * Tspeed) * time.GetDeltaTime();
+            }*/
         }
 
-        // Draw
-        shovel::vec3 color{ 1,0,0 };
+        //SetBackground color
+        shovel::vec3 color{ 0,0,0 };
+        renderer->SetColor(color.r, color.g, color.b);
+        renderer->Clear();
+        
 
+        //for (int i = 0; i < (int)points.size() - 1; i++) 
+        //{
+        //    // set color or random color
+        //    renderer.setColor((uint8_t)255, 255, 255);
+        //    renderer.drawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+        //}
+        
 
-        renderer.setColor(color.r, color.g, color.b);
+        // How to do Audio system \\
 
-        for (int i = 0; i < (int)points.size() - 1; i++) 
+        /*
+        if (input->GetKeyDown(SDL_SCANCODE_Q) && !input->GetPreviousKeyDown(SDL_SCANCODE_Q))
+        {
+            // play bass sound, vector elements can be accessed like an array with [#]
+			audioSystem->PlaySound("bass");
+        }
+        */
+        //Draw
+           for (int i = 0; i < (int)stars.size(); i++) 
         {
             // set color or random color
-            renderer.setColor((uint8_t)255, 255, 255);
-            renderer.drawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+            renderer->SetColor((uint8_t)shovel::random::getRandomFloat() * 255, shovel::random::getRandomFloat() * 255, shovel::random::getRandomFloat() * 255);
+            renderer->DrawPoint(stars[i].x, stars[i].y);
         }
 
+        scene.Draw(*renderer);
 
-        //Audio system
-        if (input.GetKeyDown(SDL_SCANCODE_Q) && !input.GetPreviousKeyDown(SDL_SCANCODE_Q))
-        {
-            // play bass sound, vector elements can be accessed like an array with [#]
-			audioSystem.PlaySound("bass");
-        }
-
-        if (input.GetKeyDown(SDL_SCANCODE_W) && !input.GetPreviousKeyDown(SDL_SCANCODE_W))
-        {
-            // play bass sound, vector elements can be accessed like an array with [#]
-			audioSystem.PlaySound("snare");
-        }
-
-        if (input.GetKeyDown(SDL_SCANCODE_E) && !input.GetPreviousKeyDown(SDL_SCANCODE_E))
-        {
-            // play bass sound, vector elements can be accessed like an array with [#]
-			audioSystem.PlaySound("hihat");
-        }
-
-        renderer.present(); // Render the screen
+        renderer->Present(); // Render the screen
     }
-	renderer.shutDown();
+    //Shut evrything down
+	renderer->ShutDown();
+    audioSystem->ShutDown();
+    input->Shutdown();
 
     return 0;
 }
