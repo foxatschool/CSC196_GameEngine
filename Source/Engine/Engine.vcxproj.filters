@@ -15,21 +15,21 @@
     <Filter Include="Source\Math">
       <UniqueIdentifier>{a2f96add-0a44-4b28-b83c-db11657338ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Math\Renderer">
-      <UniqueIdentifier>{20715e02-2650-434f-b53b-c2aa056f9435}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Input">
       <UniqueIdentifier>{817b5c0c-9968-41a7-a06f-db43d13e1b98}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Audio">
       <UniqueIdentifier>{51f33b65-f103-4d90-90fd-d3f6f66c198e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Game">
+      <UniqueIdentifier>{a52a59a8-e7de-483f-857a-2cefa229a599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Renderer">
+      <UniqueIdentifier>{20715e02-2650-434f-b53b-c2aa056f9435}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Renderer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Core\Time.cpp">
@@ -42,7 +42,13 @@
       <Filter>Source\Audio</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Model.cpp">
-      <Filter>Source\Math\Renderer</Filter>
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Actor.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Renderer.cpp">
+      <Filter>Source\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,7 +65,7 @@
       <Filter>Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Renderer.h">
-      <Filter>Source\Math\Renderer</Filter>
+      <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Math\Vector2.h">
       <Filter>Source\Math</Filter>
@@ -77,7 +83,13 @@
       <Filter>Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Model.h">
-      <Filter>Source\Math\Renderer</Filter>
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Transform.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Actor.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

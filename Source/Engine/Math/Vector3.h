@@ -13,8 +13,8 @@ namespace shovel
 			x{ x },
 			y{ y },
 			z{ z }
-		{
-		}
+		{}
+
 		union
 		{
 			struct { T x, y, z; };

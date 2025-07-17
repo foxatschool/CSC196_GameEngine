@@ -6,7 +6,7 @@ namespace shovel
 {
     bool Renderer::init()
     {
-        if (SDL_Init(SDL_INIT_VIDEO))
+        if (!SDL_Init(SDL_INIT_VIDEO))
         {
             std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
             return false;

@@ -6,6 +6,8 @@
 #include "Input\InputSystem.h"
 #include "AudioSystem\AudioSystem.h"
 #include "Renderer\Model.h"
+#include "Math\Transform.h"
+#include "../Game/Actor.h"
 
 
 #include <SDL3/SDL.h>
@@ -25,7 +27,11 @@ int main(int argc, char* argv[]) {
 	shovel::Time time;
 
     shovel::Renderer renderer;
+    renderer.init();
+    renderer.CreateWindow("Shovel Engine", 1280, 1024);
+
     shovel::InputSystem input;
+    input.Initialize();
     //std::vector<shovel::vec2> points;
     std::vector<FMOD::Sound*> sounds;
 
@@ -44,9 +50,6 @@ int main(int argc, char* argv[]) {
     audioSystem.AddSound("cowbell.wav", "cowbell");
     audioSystem.AddSound("snare.wav", "snare");
 
-    renderer.init();
-	renderer.CreateWindow("Shovel Engine", 1280, 1024);
-    input.Initialize();
 
     SDL_Event e;
     bool quit = false;
@@ -70,7 +73,17 @@ int main(int argc, char* argv[]) {
         {-5, 5}
     };
 
-    shovel::Model model{ points, {0, 0, 1} };
+    shovel::Model* model = new shovel::Model{ points, {0,0, 1} };
+
+    std::vector<shovel::Actor> actors;
+    for (int i = 0; i < 15; i++)
+    {
+        shovel::Transform transform{ shovel::vec2{shovel::random::getRandomFloat() * 1280, shovel::random::getRandomFloat() * 1024}, 0, 20};
+        shovel::Actor actor{ transform, model };
+        actors.push_back(actor);
+    }
+
+    //shovel::Model model{ points, {0, 0, 1} };
 
     //Main loop
     while (!quit) 
@@ -107,13 +120,39 @@ int main(int argc, char* argv[]) {
 
         float zero = 0;
 
-        renderer.setColor(0.0f, 0, 0);
+        renderer.setColor(1.0f, 0.0f, 1.0f);
         renderer.Clear();
 
-        model.Draw(renderer, input.GetMousePosition(), shovel::math::halfPi * 0.5f, 10.0f);
+        //model.Draw(renderer, input.GetMousePosition(), shovel::math::halfPi * 0.5f, 10.0f);
+        for (auto actor : actors)
+        {
+            actor.Draw(renderer);
+        }
+        
+
+        //if (input.GetKeyDown(SDL_SCANCODE_A)) transform.rotation += shovel::math::degTorad(90 * time.GetDeltaTime());
+        //if (input.GetKeyDown(SDL_SCANCODE_D)) transform.rotation -= shovel::math::degTorad(90 * time.GetDeltaTime());
+
+        float Tspeed = 100;
+
+        shovel::vec2 direction{ 0,0 };
+        if (input.GetKeyDown(SDL_SCANCODE_W)) direction.y = - 1 * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_A)) direction.y = 1 * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_S)) direction.x = -1 * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_D)) direction.x = 1 * time.GetDeltaTime();
+
+        if (direction.LengthSqr() > 0)
+        {
+            direction = direction.Normalized();
+            for (auto actor : actors)
+            {
+                actor.GetTransform().position += (direction * Tspeed) * time.GetDeltaTime();
+            }
+        }
 
         // Draw
         shovel::vec3 color{ 1,0,0 };
+
 
         renderer.setColor(color.r, color.g, color.b);
 
@@ -143,7 +182,6 @@ int main(int argc, char* argv[]) {
             // play bass sound, vector elements can be accessed like an array with [#]
 			audioSystem.PlaySound("hihat");
         }
-
 
         renderer.present(); // Render the screen
     }

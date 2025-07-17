@@ -45,8 +45,8 @@ namespace shovel
 		Vector2& operator /= (float s) { x /= s.x; y /= s.y; }
 
 		// square root  (x^2 + y^2)
-		float LengthSqr() { return (x * x) + (y * y); }
-		float Length() { return shovel::math::sqrtf(LengthSqr()); }
+		float LengthSqr() const { return (x * x) + (y * y); }
+		float Length() const { return shovel::math::sqrtf(LengthSqr()); }
 	
 		Vector2 Normalized() const { return *this / Length(); }
 
