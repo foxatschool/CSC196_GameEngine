@@ -9,9 +9,10 @@
 #include "Math\Transform.h"
 #include "../Game/Actor.h"
 #include "../Game/Scene.h"
+#include "Engine.h"
 
 #include "Game/Player.h"
-
+#include "SpaceGame.h"
 
 #include <SDL3/SDL.h>
 #include <iostream>
@@ -19,7 +20,14 @@
 #include <fmod.hpp>
 #include <memory>
 
+
 int main(int argc, char* argv[]) {
+
+	shovel::GetEngine().Initialize();
+
+    // Iinitalize Game
+	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
+
     union delta_t
     {
         bool b;
@@ -28,21 +36,7 @@ int main(int argc, char* argv[]) {
     };
 
 	bool stop = false;
-	shovel::Time time;
-
-    std::unique_ptr<shovel::Renderer> renderer = std::make_unique<shovel::Renderer>();
-    renderer->Init();
-    renderer->CreateWindow("Shovel Engine", 1280, 1024);
-
-    std::unique_ptr<shovel::InputSystem> input = std::make_unique<shovel::InputSystem>();
-    input->Initialize();
-    //std::vector<shovel::vec2> points;
-    std::vector<FMOD::Sound*> sounds;
-
-
-    // create audio system
-	std::unique_ptr<shovel::AudioSystem> audioSystem = std::make_unique<shovel::AudioSystem>();
-	audioSystem->Init();
+	
     FMOD::Sound* sound = nullptr;
 
 	// Initialize Sounds
@@ -60,38 +54,11 @@ int main(int argc, char* argv[]) {
     bool quit = false;
 
 
-    //Create Stars
-    std::vector<shovel::vec2> stars;
-    for (int i = 0; i < 100; i++)
-    {
-        stars.push_back(shovel::vec2{ shovel::random::getRandomFloat() * 1280, shovel::random::getRandomFloat() * 1024 });
-    }
-    shovel::ivec2 v(30, 40);
-
-    std::vector<shovel::vec2> points
-    {
-        {-5, -5},
-        {5, -5},
-        {5, 5},
-        {-5, 5},
-        {-5, -5}
-    };
-
-    std::shared_ptr<shovel::Model> model = std::make_shared<shovel::Model>(points, shovel::vec3{ 0,0, 1 });
-
-    shovel::Scene scene;
-    for (int i = 0; i < 15; i++)
-    {
-        shovel::Transform transform{ shovel::vec2{shovel::random::getRandomFloat() * 1280, shovel::random::getRandomFloat() * 1024}, 0, 20};
-        std::unique_ptr<Player> player = std::make_unique<Player>(transform, model);
-        scene.AddActor(std::move(player));
-    }
-
+   
     //Main loop\\
 
     while (!quit) 
     {
-		time.Tick();
         while (SDL_PollEvent(&e)) 
         {
             if (e.type == SDL_EVENT_QUIT) 
@@ -100,44 +67,19 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        if (input->GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
+		shovel::GetEngine().Update();
+		
 
-        // Update engine systems
-		input->Update();
-		audioSystem->Update();
+        if (shovel::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         //Get Input//
-        shovel::vec2 mouse = input->GetMousePosition();
 
-        /*for (auto& actor : actors)
-        {
-            actor->Draw(*renderer);
-        }
-        */
-
-        //Movement
-        float Tspeed = 100;
-
-        shovel::vec2 direction{ 0,0 };
-        if (input->GetKeyDown(SDL_SCANCODE_W)) direction.y = - 1 * time.GetDeltaTime();
-        if (input->GetKeyDown(SDL_SCANCODE_A)) direction.y = 1 * time.GetDeltaTime();
-        if (input->GetKeyDown(SDL_SCANCODE_S)) direction.x = -1 * time.GetDeltaTime();
-        if (input->GetKeyDown(SDL_SCANCODE_D)) direction.x = 1 * time.GetDeltaTime();
-
-        if (direction.LengthSqr() > 0)
-        {
-            direction = direction.Normalized();
-            /*for (auto& actor : actors)
-            {
-                actor->GetTransform().position += (direction * Tspeed) * time.GetDeltaTime();
-            }*/
-        }
+       
 
         //SetBackground color
         shovel::vec3 color{ 0,0,0 };
-        renderer->SetColor(color.r, color.g, color.b);
-        renderer->Clear();
-        
+        shovel::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
+        shovel::GetEngine().GetRenderer().Clear();
 
         //for (int i = 0; i < (int)points.size() - 1; i++) 
         //{
@@ -157,21 +99,14 @@ int main(int argc, char* argv[]) {
         }
         */
         //Draw
-           for (int i = 0; i < (int)stars.size(); i++) 
-        {
-            // set color or random color
-            renderer->SetColor((uint8_t)shovel::random::getRandomFloat() * 255, shovel::random::getRandomFloat() * 255, shovel::random::getRandomFloat() * 255);
-            renderer->DrawPoint(stars[i].x, stars[i].y);
-        }
+           
 
-        scene.Draw(*renderer);
+        
 
-        renderer->Present(); // Render the screen
+        shovel::GetEngine().GetRenderer().Present(); // Render the screen
     }
     //Shut evrything down
-	renderer->ShutDown();
-    audioSystem->ShutDown();
-    input->Shutdown();
+    shovel::GetEngine().Shutdown();
 
     return 0;
 }

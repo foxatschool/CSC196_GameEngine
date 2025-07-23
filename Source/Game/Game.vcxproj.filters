@@ -19,12 +19,18 @@
     <ClCompile Include="Game\Player.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="SpaceGame.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Player.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Enemy.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceGame.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
