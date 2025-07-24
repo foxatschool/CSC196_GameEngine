@@ -10,6 +10,7 @@
 #include "Framework/Actor.h"
 #include "Framework/Scene.h"
 #include "Engine.h"
+#include "Renderer/Text.h"
 
 #include "Game/Player.h"
 #include "Game/SpaceGame.h"
@@ -24,6 +25,14 @@
 int main(int argc, char* argv[]) {
 
 	shovel::GetEngine().Initialize();
+
+
+	shovel::Font* font = new shovel::Font();
+    font->Load("Eight-Bit Madness.ttf", 20);
+
+    shovel::Text* text = new shovel::Text(font);
+    text->Create(shovel::GetEngine().GetRenderer(), "Hello World", shovel::vec3{1.0f, 1.0f, 1.0f});
+
 
     // Iinitalize Game
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
@@ -68,6 +77,8 @@ int main(int argc, char* argv[]) {
             }
         }
 
+
+
         shovel::GetEngine().Update();
 		game->Update();
 		
@@ -79,6 +90,7 @@ int main(int argc, char* argv[]) {
         shovel::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
         shovel::GetEngine().GetRenderer().Clear();
 
+        text->Draw(shovel::GetEngine().GetRenderer(), 40.0f, 40.0f);
         //for (int i = 0; i < (int)points.size() - 1; i++) 
         //{
         //    // set color or random color
