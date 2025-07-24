@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Actor.h"
 #include "../Renderer/Renderer.h"
+#include "../Core/StringHelper.h"
 
 namespace shovel {
 	/// <summary>
@@ -27,7 +28,19 @@ namespace shovel {
 	/// 
 	/// </summary>
 	/// <param name="actor"></param>
-	void Scene::AddActor(std::unique_ptr<class Actor> actor) {
+	void Scene::AddActor(std::unique_ptr<class Actor> actor) 
+	{
+		actor->scene = this;
 		m_actors.push_back(std::move(actor));
+	}
+
+	Actor* Scene::GetActorByName(const std::string& name)
+	{
+		for (auto& actor : m_actors)
+			if (actor->name == toLower(name))
+			{
+				return actor.get();
+			}
+		return nullptr;
 	}
 }

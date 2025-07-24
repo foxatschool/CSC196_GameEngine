@@ -1,5 +1,5 @@
 #pragma once
-#include "../Actor.h"
+#include "Framework/Actor.h"
 
 class Enemy : public shovel::Actor
 {
@@ -9,6 +9,8 @@ public:
 		Actor{ transform, model }
 	{
 	}
+
+
 
 
 	void Update(float dt) override;

@@ -7,12 +7,12 @@
 #include "AudioSystem\AudioSystem.h"
 #include "Renderer\Model.h"
 #include "Math\Transform.h"
-#include "../Game/Actor.h"
-#include "../Game/Scene.h"
+#include "Framework/Actor.h"
+#include "Framework/Scene.h"
 #include "Engine.h"
 
 #include "Game/Player.h"
-#include "SpaceGame.h"
+#include "Game/SpaceGame.h"
 
 #include <SDL3/SDL.h>
 #include <iostream>
@@ -27,6 +27,7 @@ int main(int argc, char* argv[]) {
 
     // Iinitalize Game
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
+    game->Initialize();
 
     union delta_t
     {
@@ -67,14 +68,11 @@ int main(int argc, char* argv[]) {
             }
         }
 
-		shovel::GetEngine().Update();
+        shovel::GetEngine().Update();
+		game->Update();
 		
 
         if (shovel::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
-
-        //Get Input//
-
-       
 
         //SetBackground color
         shovel::vec3 color{ 0,0,0 };
@@ -99,6 +97,7 @@ int main(int argc, char* argv[]) {
         }
         */
         //Draw
+		game->Draw();
            
 
         

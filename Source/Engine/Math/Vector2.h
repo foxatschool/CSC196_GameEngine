@@ -39,10 +39,10 @@ namespace shovel
 		Vector2& operator *= (const Vector2& v) { x *= v.x; y *= v.y; return *this; }
 		Vector2& operator /= (const Vector2& v) { x /= v.x; y /= v.y; return *this; }
 
-		Vector2& operator += (float s) { x += s.x; y += s.y; }
-		Vector2& operator -= (float s) { x -= s.x; y -= s.y; }
-		Vector2& operator *= (float s) { x *= s.x; y *= s.y; }
-		Vector2& operator /= (float s) { x /= s.x; y /= s.y; }
+		Vector2& operator += (float s) { x += s; y += s; return *this; }
+		Vector2& operator -= (float s) { x -= s; y -= s; return *this; }
+		Vector2& operator *= (float s) { x *= s; y *= s; return *this; }
+		Vector2& operator /= (float s) { x /= s; y /= s; return *this; }
 
 		// square root  (x^2 + y^2)
 		float LengthSqr() const { return (x * x) + (y * y); }
