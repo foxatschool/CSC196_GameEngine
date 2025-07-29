@@ -4,43 +4,31 @@
 #include "../Core/StringHelper.h"
 
 namespace shovel {
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="dt"></param>
+	
+	// Update all actors in the scene
 	void Scene::Update(float dt) {
 		for (auto& actor : m_actors) {
 			actor->Update(dt);
 		}
 	}
 
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="renderer"></param>
+	// Draw all actors in the scene
 	void Scene::Draw(Renderer& renderer) {
 		for (auto& actor : m_actors) {
 			actor->Draw(renderer);
 		}
 	}
 
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="actor"></param>
+	// Add an actor to the scene
 	void Scene::AddActor(std::unique_ptr<class Actor> actor) 
 	{
 		actor->scene = this;
 		m_actors.push_back(std::move(actor));
 	}
 
-	Actor* Scene::GetActorByName(const std::string& name)
+	// Remove all actors from the scene
+	void Scene::RemoveAllActors()
 	{
-		for (auto& actor : m_actors)
-			if (actor->name == toLower(name))
-			{
-				return actor.get();
-			}
-		return nullptr;
+		m_actors.clear();
 	}
 }

@@ -24,6 +24,7 @@
 
 int main(int argc, char* argv[]) {
 
+	// Initialize Evrything
 	shovel::GetEngine().Initialize();
 
 
@@ -37,15 +38,6 @@ int main(int argc, char* argv[]) {
     // Iinitalize Game
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
     game->Initialize();
-
-    union delta_t
-    {
-        bool b;
-        int i;
-        double d;
-    };
-
-	bool stop = false;
 	
     FMOD::Sound* sound = nullptr;
 
@@ -78,11 +70,11 @@ int main(int argc, char* argv[]) {
         }
 
 
-
+		// Update the game and engine
         shovel::GetEngine().Update();
-		game->Update();
+		game->Update(shovel::GetEngine().GetTime().GetDeltaTime());
 		
-
+		// Check for exit imput
         if (shovel::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         //SetBackground color
@@ -90,13 +82,8 @@ int main(int argc, char* argv[]) {
         shovel::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
         shovel::GetEngine().GetRenderer().Clear();
 
+		// Draw the game
         text->Draw(shovel::GetEngine().GetRenderer(), 40.0f, 40.0f);
-        //for (int i = 0; i < (int)points.size() - 1; i++) 
-        //{
-        //    // set color or random color
-        //    renderer.setColor((uint8_t)255, 255, 255);
-        //    renderer.drawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
-        //}
         
 
         // How to do Audio system \\
@@ -108,13 +95,13 @@ int main(int argc, char* argv[]) {
 			audioSystem->PlaySound("bass");
         }
         */
-        //Draw
+
+		//Draw the game scene
 		game->Draw();
            
 
-        
-
-        shovel::GetEngine().GetRenderer().Present(); // Render the screen
+        // Render the screen
+        shovel::GetEngine().GetRenderer().Present();
     }
     //Shut evrything down
     shovel::GetEngine().Shutdown();

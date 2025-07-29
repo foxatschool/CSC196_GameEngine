@@ -12,7 +12,9 @@ shovel::Font::~Font()
 
 bool shovel::Font::Load(const std::string& name, float fontSize) 
 {
+	// Initialize the TTF library if it hasn't been done yet
 	m_ttfFont = TTF_OpenFont(name.c_str(), fontSize);
+	// Check if the font was loaded successfully
 	if (m_ttfFont == nullptr) 
 	{
 		std::cerr << "Could not load font: " << name << std::endl;

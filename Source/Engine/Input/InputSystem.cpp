@@ -8,6 +8,7 @@ bool shovel::InputSystem::Initialize()
 
     const bool* keyboardState = SDL_GetKeyboardState(&numKeys);
 
+	// Initialize keyboard state
 	m_keyboardState.resize(numKeys);
     std::copy(keyboardState, keyboardState + numKeys, m_keyboardState.begin());
 	m_prevkeyboardState = m_keyboardState;

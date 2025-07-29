@@ -8,6 +8,7 @@ namespace shovel
 {
 	bool AudioSystem::CheckFMODResult(FMOD_RESULT result)
 	{
+		// Check if the result is not OK
 		if (result != FMOD_OK)
 		{
 			std::cerr << FMOD_ErrorString(result) << std::endl;
@@ -19,6 +20,7 @@ namespace shovel
 
 	bool AudioSystem::Init()
 	{
+		// Check if the audio system is already initialized
 		FMOD_RESULT result = FMOD::System_Create(&m_aSystem);
 		if (!CheckFMODResult(result)) return false;
 

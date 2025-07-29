@@ -7,11 +7,7 @@ public:
 	Enemy() = default;
 	Enemy(shovel::Transform transform, std::shared_ptr<class shovel::Model> model) :
 		Actor{ transform, model }
-	{
-	}
-
-
-
+	{}
 
 	void Update(float dt) override;
 
