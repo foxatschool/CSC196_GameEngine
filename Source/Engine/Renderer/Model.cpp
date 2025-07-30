@@ -22,4 +22,17 @@ namespace shovel
 	{
 		Draw(renderer, transform.position, transform.rotation, transform.scale);
 	}
+	void Model::CalculateRadius()
+	{
+		// Calculate the radius of the model based on the points
+		m_radius = 0;
+		for (auto& point : m_points)
+		{
+			float length = point.Length();
+			if (length > m_radius)
+			{
+				m_radius = length;
+			}
+		}
+	}
 }

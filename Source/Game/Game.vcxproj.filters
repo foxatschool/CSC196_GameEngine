@@ -23,7 +23,7 @@
     <ClCompile Include="GameDada.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Rocket.cpp">
+    <ClCompile Include="Game\Rocket.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -40,7 +40,7 @@
     <ClInclude Include="GameData.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Rocket.h">
+    <ClInclude Include="Game\Rocket.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

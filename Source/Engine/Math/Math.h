@@ -21,16 +21,13 @@ namespace shovel::math
 
 	inline float wrap(float value, float min, float max)
 	{
-
-		while (value > max)
-		{
-			return min + (value - max);
-		}
-
-
 		float range = max - min;
-		float result = std::fmod(value - min, range);
-		if (result < 0) result += range + (value - max);
+		float result = std::fmodf(value - min, range);
+
+		if (result < 0) result += range;
+
+
+		return min + result;
 	}
 
 	using std::min;

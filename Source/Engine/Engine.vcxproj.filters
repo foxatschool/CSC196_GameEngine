@@ -62,6 +62,9 @@
     <ClCompile Include="Renderer\Text.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Core\File.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Time.h">

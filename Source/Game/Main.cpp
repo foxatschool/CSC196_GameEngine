@@ -11,6 +11,8 @@
 #include "Framework/Scene.h"
 #include "Engine.h"
 #include "Renderer/Text.h"
+#include "Renderer/Font.h"
+#include "Core/File.h"
 
 #include "Game/Player.h"
 #include "Game/SpaceGame.h"
@@ -24,15 +26,56 @@
 
 int main(int argc, char* argv[]) {
 
+
+    // Get current directory path
+    std::cout << "Directory Operations:\n";
+    std::cout << "Current directory: " << shovel::file::GetCurrentDirectory() << "\n";
+
+    // Set current directory path (current path + "Assets")
+    std::cout << "Setting directory to 'Assets'...\n";
+    shovel::file::SetCurrentDirectory("Assets");
+    std::cout << "New directory: " << shovel::file::GetCurrentDirectory() << "\n\n";
+
+    // Get filenames in the current directory
+    std::cout << "Files in Directory:\n";
+    auto filenames = shovel::file::GetFilesInDirectory(shovel::file::GetCurrentDirectory());
+    for (const auto& filename : filenames) {
+        std::cout << filename << "\n";
+    }
+    std::cout << "\n";
+
+    // Get filename (filename.extension) only
+    if (!filenames.empty()) {
+        std::cout << "Path Analysis:\n";
+        std::string filename = shovel::file::GetFilename(filenames[0]);
+        std::cout << "Filename only: " << filename << "\n";
+
+        // Get extension only
+        std::string ext = shovel::file::GetExtension(filenames[0]);
+        std::cout << "Extension: " << ext << "\n\n";
+    }
+
+    // Read and display text file
+    std::cout << "Text File Reading:\n";
+    std::string str;
+    bool success = shovel::file::ReadTextFile("test.txt", str);
+    if (success) {
+        std::cout << "Contents of test.txt:\n";
+        std::cout << str << "\n";
+    }
+    else {
+        std::cout << "Failed to read test.txt\n";
+    }
+
 	// Initialize Evrything
 	shovel::GetEngine().Initialize();
 
 
-	shovel::Font* font = new shovel::Font();
-    font->Load("Eight-Bit Madness.ttf", 20);
+	//font = new shovel::Font();
+    //font->Load("Eight-Bit Madness.ttf", 20);
 
-    shovel::Text* text = new shovel::Text(font);
-    text->Create(shovel::GetEngine().GetRenderer(), "Hello World", shovel::vec3{1.0f, 1.0f, 1.0f});
+    //shovel::Text* text = new shovel::Text(font);
+    //text->Create(shovel::GetEngine().GetRenderer(), "Hello World", shovel::vec3{1.0f, 1.0f, 1.0f});
 
 
     // Iinitalize Game
@@ -83,7 +126,7 @@ int main(int argc, char* argv[]) {
         shovel::GetEngine().GetRenderer().Clear();
 
 		// Draw the game
-        text->Draw(shovel::GetEngine().GetRenderer(), 40.0f, 40.0f);
+        //text->Draw(shovel::GetEngine().GetRenderer(), 40.0f, 40.0f);
         
 
         // How to do Audio system \\
@@ -104,6 +147,8 @@ int main(int argc, char* argv[]) {
         shovel::GetEngine().GetRenderer().Present();
     }
     //Shut evrything down
+	game->ShutDown();
+    game.release();
     shovel::GetEngine().Shutdown();
 
     return 0;
