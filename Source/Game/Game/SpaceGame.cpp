@@ -18,10 +18,10 @@ bool SpaceGame::Initialize()
 	m_scene = std::make_unique<shovel::Scene>(this);
 
 	m_titleFont = std::make_shared<shovel::Font>();
-	m_titleFont->Load("Assets/Fonts/PressStart2P-Regular.ttf", 128);
+	m_titleFont->Load("Eight-Bit Madness.ttf", 128);
 
 	m_uiFont = std::make_shared<shovel::Font>();
-	m_uiFont->Load("Assets/Fonts/PressStart2P-Regular.ttf", 48);
+	m_uiFont->Load("Eight-Bit Madness.ttf", 48);
 
 	m_titleText = std::make_unique<shovel::Text>(m_titleFont);
 	m_scoreText = std::make_unique<shovel::Text>(m_uiFont);
@@ -58,9 +58,9 @@ void SpaceGame::Update(float dt)
 			m_enemySpawnTimer = 4; // Reset timer
 			// Spawn an enemy
 			std::shared_ptr<shovel::Model> enemyModel = std::make_shared<shovel::Model>(GameData::ShipPoint, shovel::vec3{0,1,0});
-			shovel::Transform transform{ shovel::vec2{shovel::random::getRandomFloat() * 1280, shovel::random::getRandomFloat() * 1024}, 0, 8 };
+			shovel::Transform transform{ shovel::vec2{shovel::random::getReal() * 1280, shovel::random::getReal() * 1024}, 0, 8 };
 			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
-			enemy->velocity = shovel::vec2{ shovel::random::getRandomFloat() * 100 - 50, shovel::random::getRandomFloat() * 100 - 50 };
+			enemy->velocity = shovel::vec2{ shovel::random::getReal() * 100 - 50, shovel::random::getReal() * 100 - 50 };
 			enemy->damping = 1.5f;
 			enemy->name = "Enemy";
 			enemy->speed = 0;

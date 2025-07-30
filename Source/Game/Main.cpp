@@ -25,47 +25,40 @@
 
 
 int main(int argc, char* argv[]) {
-
-
-    // Get current directory path
-    std::cout << "Directory Operations:\n";
-    std::cout << "Current directory: " << shovel::file::GetCurrentDirectory() << "\n";
-
-    // Set current directory path (current path + "Assets")
-    std::cout << "Setting directory to 'Assets'...\n";
     shovel::file::SetCurrentDirectory("Assets");
-    std::cout << "New directory: " << shovel::file::GetCurrentDirectory() << "\n\n";
 
-    // Get filenames in the current directory
-    std::cout << "Files in Directory:\n";
-    auto filenames = shovel::file::GetFilesInDirectory(shovel::file::GetCurrentDirectory());
-    for (const auto& filename : filenames) {
-        std::cout << filename << "\n";
+    // Test getInt() variants
+    std::cout << "Integer Functions:\n";
+    std::cout << "getInt(): " << shovel::random::getInt() << "\n";
+    std::cout << "getInt(): " << shovel::random::getInt() << "\n";
+    std::cout << "getInt(10): " << shovel::random::getInt(10) << "\n";
+    std::cout << "getInt(10): " << shovel::random::getInt(10) << "\n";
+    std::cout << "getInt(5, 15): " << shovel::random::getInt(5, 15) << "\n";
+    std::cout << "getInt(5, 15): " << shovel::random::getInt(5, 15) << "\n";
+    std::cout << "getInt(-10, 10): " << shovel::random::getInt(-10, 10) << "\n\n";
+
+    // Test getReal() variants with float
+    std::cout << "Float Functions:\n";
+    std::cout << std::fixed << std::setprecision(6);
+    std::cout << "getReal<float>(): " << shovel::random::getReal<float>() << "\n";
+    std::cout << "getReal<float>(): " << shovel::random::getReal<float>() << "\n";
+    std::cout << "getReal<float>(5.0f): " << shovel::random::getReal<float>(5.0f) << "\n";
+    std::cout << "getReal<float>(2.5f, 7.5f): " << shovel::random::getReal<float>(2.5f, 7.5f) << "\n";
+    std::cout << "getReal<float>(-1.0f, 1.0f): " << shovel::random::getReal<float>(-1.0f, 1.0f) << "\n\n";
+
+    // Test getReal() variants with double
+    std::cout << "Double Functions:\n";
+    std::cout << std::setprecision(10);
+    std::cout << "getReal<double>(): " << shovel::random::getReal<double>() << "\n";
+    std::cout << "getReal<double>(100.0): " << shovel::random::getReal<double>(100.0) << "\n";
+    std::cout << "getReal<double>(0.0, 2.0): " << shovel::random::getReal<double>(0.0, 2.0) << "\n\n";
+
+    // Test getBool()
+    std::cout << "Boolean Functions:\n";
+    for (int i = 0; i < 10; ++i) {
+        std::cout << "getBool(): " << std::boolalpha << shovel::random::getBool() << "\n";
     }
     std::cout << "\n";
-
-    // Get filename (filename.extension) only
-    if (!filenames.empty()) {
-        std::cout << "Path Analysis:\n";
-        std::string filename = shovel::file::GetFilename(filenames[0]);
-        std::cout << "Filename only: " << filename << "\n";
-
-        // Get extension only
-        std::string ext = shovel::file::GetExtension(filenames[0]);
-        std::cout << "Extension: " << ext << "\n\n";
-    }
-
-    // Read and display text file
-    std::cout << "Text File Reading:\n";
-    std::string str;
-    bool success = shovel::file::ReadTextFile("test.txt", str);
-    if (success) {
-        std::cout << "Contents of test.txt:\n";
-        std::cout << str << "\n";
-    }
-    else {
-        std::cout << "Failed to read test.txt\n";
-    }
 
 	// Initialize Evrything
 	shovel::GetEngine().Initialize();
