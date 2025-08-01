@@ -7,4 +7,5 @@ namespace GameData
 {
 	extern std::vector<shovel::vec2> ShipPoint;
 	extern std::vector<shovel::vec2> EnemyPoint;
+	extern std::vector<shovel::vec2> BulletPoints;
 }

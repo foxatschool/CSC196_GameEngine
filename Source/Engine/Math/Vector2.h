@@ -61,6 +61,34 @@ namespace shovel
 
 			return v;
 		}
+
+		// Returns the dot product of two vectors
+		static float Dot(const Vector2 a, const Vector2 b)
+		{
+			return (a.x * b.x) + (a.y * b.y);
+		}
+
+		// Returns the cross product of two vectors
+		static float Cross(const Vector2& a, const Vector2& b)
+		{
+			return (a.x * b.y) - (b.x * a.y);
+		}
+
+		// Returns the angle between two vectors in radians
+		static float AngleBetween(const Vector2& a, const Vector2& b)
+		{
+			return math::acosf(Dot(a, b));
+		}
+
+		// Returns the signed angle between two vectors in radians
+		static float SignedAngleBetween(const Vector2& a, const Vector2& b)
+		{
+			float x = Dot(a, b);
+			float y = Cross(a, b);
+
+			return math::atan2f(y, x);
+		}
+
 	};
 
 	using ivec2 = Vector2<int>;

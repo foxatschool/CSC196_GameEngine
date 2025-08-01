@@ -8,6 +8,7 @@ public:
 	float rotationRate = 180; // degrees per second
 	float fireTime = 0.2f; // rate of fire in seconds
 	float fireTimer = 0.0f;
+	int bulletCount = 5;
 
 public:
 	Player() = default;
@@ -19,10 +20,11 @@ public:
 
 
 	void Update(float dt) override;
-	
 
 private:
 
 	// Inherited via Actor
 	void OnColission(Actor* other) override;
+	bool reloded = true;
+	int ReloadTimer = 15;
 };

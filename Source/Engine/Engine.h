@@ -7,7 +7,7 @@ namespace shovel
 	class Renderer;
 	class AudioSystem;
 	class InputSystem;
-
+	class ParticalSystem;
 
 	class Engine
 	{
@@ -21,6 +21,7 @@ namespace shovel
 		Renderer& GetRenderer() { return *m_renderer; }
 		AudioSystem& GetAudio() { return *m_audio; }
 		InputSystem& GetInput() { return *m_input; }
+		ParticalSystem& GetPS() { return *m_particleSystem; }
 
 		Time& GetTime() { return m_time; }
 
@@ -30,6 +31,7 @@ namespace shovel
 		std::unique_ptr<Renderer> m_renderer;
 		std::unique_ptr<AudioSystem> m_audio;
 		std::unique_ptr<InputSystem> m_input;
+		std::unique_ptr<ParticalSystem> m_particleSystem;
 	};
 
 	Engine& GetEngine();

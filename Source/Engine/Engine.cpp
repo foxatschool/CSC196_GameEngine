@@ -2,6 +2,7 @@
 #include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
 #include "AudioSystem/AudioSystem.h"
+#include "Renderer/ParticalSystem.h"
 
 namespace shovel
 {
@@ -24,11 +25,16 @@ namespace shovel
 
 		m_audio = std::make_unique<shovel::AudioSystem>();
 		m_audio->Init();
+
+		m_particleSystem = std::make_unique<shovel::ParticalSystem>();
+		m_particleSystem->Initialize();
+
 		return true;
 	}
 
 	void Engine::Update()
 	{
+		m_particleSystem->Update(m_time.GetDeltaTime());
 		m_time.Tick();
 		m_input->Update();
 		m_audio->Update();
@@ -36,6 +42,7 @@ namespace shovel
 
 	void Engine::Shutdown()
 	{
+		m_particleSystem->ShutDown();
 		m_renderer->ShutDown();
 		m_input->Shutdown();
 		m_audio->ShutDown();
@@ -43,7 +50,7 @@ namespace shovel
 
 	void Engine::Draw()
 	{
-
+		//
 	}
 
 }

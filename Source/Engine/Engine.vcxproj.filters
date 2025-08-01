@@ -65,6 +65,9 @@
     <ClCompile Include="Core\File.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\ParticalSystem.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Time.h">
@@ -119,6 +122,9 @@
       <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Text.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\ParticalSystem.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
   </ItemGroup>

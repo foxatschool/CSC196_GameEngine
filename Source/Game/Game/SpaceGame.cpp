@@ -9,6 +9,7 @@
 #include "Engine.h"
 #include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
+#include "Renderer/ParticalSystem.h"
 #include "../GameData.h"
 
 
@@ -36,7 +37,7 @@ void SpaceGame::Update(float dt)
     switch (m_gameState)
     {
     case SpaceGame::GameState::Initalize:
-		m_gameState = SpaceGame::GameState::StartGame;
+		m_gameState = SpaceGame::GameState::Title;
         break;
     case SpaceGame::GameState::Title:
 		if (shovel::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE))
@@ -57,26 +58,19 @@ void SpaceGame::Update(float dt)
 		{
 			m_enemySpawnTimer = 4; // Reset timer
 			// Spawn an enemy
-			std::shared_ptr<shovel::Model> enemyModel = std::make_shared<shovel::Model>(GameData::ShipPoint, shovel::vec3{0,1,0});
-			shovel::Transform transform{ shovel::vec2{shovel::random::getReal() * 1280, shovel::random::getReal() * 1024}, 0, 8 };
-			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
-			enemy->velocity = shovel::vec2{ shovel::random::getReal() * 100 - 50, shovel::random::getReal() * 100 - 50 };
-			enemy->damping = 1.5f;
-			enemy->name = "Enemy";
-			enemy->speed = 0;
-			m_scene->AddActor(std::move(enemy));
+			SpawnEnemy();
 
 		}
         break;
     case SpaceGame::GameState::StartRound:
     {
+        m_scene->RemoveAllActors();
         //Create player.
         std::shared_ptr<shovel::Model> playerModel = std::make_shared<shovel::Model>(GameData::ShipPoint, shovel::vec3{ 0,1,0 });
         shovel::Transform transform{ shovel::vec2{shovel::GetEngine().GetRenderer().GetWidth() * 0.5f, shovel::GetEngine().GetRenderer().GetHeight() * 0.5f}, 0, 8 };
         auto player = std::make_unique<Player>(transform, playerModel);
-        player->damping = 0.5f;
+        player->damping = 1.5f;
         player->speed = 500.0f;
-        player->damping = 0.1f;
         player->name = "Player";
         player->tag = "Player";
         m_scene->AddActor(std::move(player));
@@ -84,27 +78,71 @@ void SpaceGame::Update(float dt)
     }
         break;
     case SpaceGame::GameState::PlayerDead:
-        m_lives--;
-        if (m_lives == 0) GameState::GameOver;
-        else
-        {
-			m_gameState = GameState::StartRound;
-        }
+        m_stateTimer -= dt;
+		if (m_stateTimer <= 0.0f)
+		{
+            m_lives--;
+        
+            if (m_lives == 0) GameState::GameOver;
+            else
+            {
+			    m_gameState = GameState::StartRound;
+            }
+			m_stateTimer = 2.0f; // Reset the timer for the next round
+		}
         break;
     case SpaceGame::GameState::GameOver:
+        m_gameState = GameState::Title;
         break;
     default:
         break;
 
     }
+	if (shovel::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Q))
+	{
+		shovel::GetEngine().GetTime().setTimeScale(0.5f);
+    }
+    else
+    {
+		shovel::GetEngine().GetTime().setTimeScale(1.0f);
+    }
+
     m_scene->Update(shovel::GetEngine().GetTime().GetDeltaTime());
 }
 
-void SpaceGame::Draw()
+void SpaceGame::Draw(shovel::Renderer& renderer)
 {
-    m_scene->Draw(shovel::GetEngine().GetRenderer());
+    if (m_gameState == SpaceGame::GameState::Title)
+    {
+        m_titleText->Create(renderer, "SPACE CADETS", shovel::vec3(1, 1, 0));
+        m_titleText->Draw(renderer, 400, 400);
+    }
+    if (m_gameState == SpaceGame::GameState::GameOver)
+    {
+        m_titleText->Create(renderer, "GameOver", shovel::vec3(1, 1, 0));
+        m_titleText->Draw(renderer, 400, 400);
+    }
+    m_scoreText->Create(renderer, "SCORE: " + std::to_string(m_score), {1,1,1});
+	m_scoreText->Draw(renderer, 10, 10);
+
+	for (int i = 0; i < (m_scene->GetActorByName("Player")).bulletCount; i++)
+	{
+		renderer.DrawLine();
+	}
+	m_livesText->Create(renderer, "LIVES: " + std::to_string(m_lives), { 1,1,1 });
+	m_livesText->Draw(renderer, (float)renderer.GetWidth() - 300, (float)30);
+
+    m_scene->Draw(renderer);
+
+	shovel::GetEngine().GetPS().Draw(renderer);
 }
 
 void SpaceGame::ShutDown()
 {
+}
+
+void SpaceGame::OnPlayerDeath()
+{
+    m_gameState = GameState::PlayerDead;
+	m_stateTimer = 2.0f; // Wait for 2 seconds before restarting
 }

@@ -1,4 +1,6 @@
 #pragma once
+#include <Math/Vector2.h>
+#include <math.h>
 #include <cstdlib>
 #include <random>
 
@@ -64,6 +66,14 @@ namespace shovel::random
     inline bool getBool() {
         static std::bernoulli_distribution dist(0.5);
         return dist(generator());
+    }
+
+	// Returns a random point on the unit circle
+    inline vec2 onUnitCircle()
+    {
+        float radians = getReal(math::twoPi);
+
+        return { cosf(radians) , sinf(radians) };
     }
 }
 

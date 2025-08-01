@@ -27,4 +27,15 @@ namespace GameData
         { 9, -1 },
         { 9, 1 },
     };
+
+    //Points for the bullet model
+    std::vector<shovel::vec2> BulletPoints
+    {
+        { 3, 0 },
+        { 1, -1 },
+        { -3, -1 },
+        { -3, 1 },
+        { 1, 1 },
+        { 3, 0 }
+    };
 }
