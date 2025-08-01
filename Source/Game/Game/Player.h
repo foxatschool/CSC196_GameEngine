@@ -26,5 +26,6 @@ private:
 	// Inherited via Actor
 	void OnColission(Actor* other) override;
 	bool reloded = true;
-	int ReloadTimer = 15;
+	float ReloadTimer = 5.0f;
+	void reload();
 };

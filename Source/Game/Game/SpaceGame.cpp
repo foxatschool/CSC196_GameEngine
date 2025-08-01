@@ -10,6 +10,7 @@
 #include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
 #include "Renderer/ParticalSystem.h"
+#include "Framework/Scene.h"
 #include "../GameData.h"
 
 
@@ -27,7 +28,9 @@ bool SpaceGame::Initialize()
 	m_titleText = std::make_unique<shovel::Text>(m_titleFont);
 	m_scoreText = std::make_unique<shovel::Text>(m_uiFont);
 	m_livesText = std::make_unique<shovel::Text>(m_uiFont);
+    m_bulletText = std::make_unique<shovel::Text>(m_uiFont);
 
+    m_bulletModel = std::make_unique<shovel::Model>(GameData::BulletPoints, shovel::vec3{ 1.0,1.0,1.0 });
     return true;
 }
 
@@ -125,10 +128,16 @@ void SpaceGame::Draw(shovel::Renderer& renderer)
     m_scoreText->Create(renderer, "SCORE: " + std::to_string(m_score), {1,1,1});
 	m_scoreText->Draw(renderer, 10, 10);
 
-	for (int i = 0; i < (m_scene->GetActorByName("Player")).bulletCount; i++)
-	{
-		renderer.DrawLine();
-	}
+    if (m_scene->GetActorByName<Player>("Player"))
+    {
+	    for (int i = 0; i < (m_scene->GetActorByName<Player>("Player"))->bulletCount; i++)
+	    {
+           /* m_bulletText->Create(renderer, "I", shovel::vec3(1, 1, 1));
+            m_bulletText->Draw(renderer, (10 + ((i + 10) * 50)), 10);*/
+
+            m_bulletModel->Draw(renderer, { (10.0f + ((i + 10.0f) * 50.0f)), 30.0f }, 270, 10);
+	    }
+    }
 	m_livesText->Create(renderer, "LIVES: " + std::to_string(m_lives), { 1,1,1 });
 	m_livesText->Draw(renderer, (float)renderer.GetWidth() - 300, (float)30);
 
@@ -136,7 +145,30 @@ void SpaceGame::Draw(shovel::Renderer& renderer)
 
 	shovel::GetEngine().GetPS().Draw(renderer);
 }
+void SpaceGame::SpawnEnemy()
+{
+    Player* player = m_scene->GetActorByName<Player>("Player");
+    if (player)
+    {
+        std::shared_ptr<shovel::Model> enemyModel = std::make_shared<shovel::Model>(GameData::ShipPoint, shovel::vec3{ 1,1,1 });
 
+        //spawn enemy at a random position around the player
+        shovel::vec2 position = player->transform.position + shovel::random::onUnitCircle() * shovel::random::getReal(200.0f, 500.0f);
+        shovel::Transform transform{ position, shovel::random::getReal<float>(0.0f, 360.0f), 8 };
+
+        // Create a new enemy actor
+        std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
+        enemy->velocity = shovel::vec2{ shovel::random::getReal() * 100 - 50, shovel::random::getReal() * 100 - 50 };
+        enemy->damping = 1.5f;
+        enemy->fireTimer = 100000000.0f; // Time between shots
+        enemy->name = "Enemy";
+        enemy->tag = "Enemy";
+        enemy->speed = 0;
+        m_scene->AddActor(std::move(enemy));
+    }
+
+
+}
 void SpaceGame::ShutDown()
 {
 }

@@ -16,7 +16,7 @@
 
 void Player::Shoot()
 {
-	reloded = bulletCount <= 0;
+ 	reloded = bulletCount <= 0;
 	if (!reloded)
 	{
 		bulletCount--;
@@ -34,14 +34,10 @@ void Player::Shoot()
 	else
 	{
 		scene->GetGame()->SubtractPoints(100);
-		ReloadTimer -= shovel::GetEngine().GetTime().GetDeltaTime();
-		if (ReloadTimer <= 0.0f)
-		{
-			bulletCount = 5;
-			ReloadTimer = 15;
-		}
 	}
 }
+
+
 
 void Player::Update(float dt)
 {
@@ -74,6 +70,18 @@ void Player::Update(float dt)
 	transform.position.x = shovel::math::wrap(transform.position.x, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
 	transform.position.y = shovel::math::wrap(transform.position.y, 0.0f, (float)shovel::GetEngine().GetRenderer().GetHeight());
 
+	if (bulletCount <= 0)
+	{
+		reloded = true;
+		ReloadTimer -= dt;
+		if (ReloadTimer <= 0.0f)
+		{
+			bulletCount = 5;
+			ReloadTimer = 5.0f;
+			reloded = false;
+		}
+	}
+
 	fireTimer -= dt;
 	if (shovel::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE) && fireTimer <=0 )
 	{
@@ -82,6 +90,7 @@ void Player::Update(float dt)
 		fireTimer = fireTime;
 	}
 	// Call the base class update method
+
 
 	Actor::Update(dt);
 }
