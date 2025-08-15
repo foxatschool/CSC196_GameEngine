@@ -12,8 +12,8 @@ public:
 
 public:
 	Player() = default;
-	Player(const shovel::Transform& transform, std::shared_ptr<shovel::Model> model) :
-		Actor{ transform, model }
+	Player(const shovel::Transform& transform) :
+		Actor{ transform }
 	{}
 
 	void Shoot();

@@ -29,13 +29,13 @@ namespace shovel
         SDL_Quit();
     }
 
-    bool Renderer::CreateWindow(const std::string& name, int width, int height)
+    bool Renderer::CreateWindow(const std::string& name, int width, int height, bool fullscreen)
     {
 		m_width = width;
 		m_height = height;
 
 		// Create the SDL window
-        m_window = SDL_CreateWindow(name.c_str(), width, height, 0);
+        m_window = SDL_CreateWindow(name.c_str(), width, height, fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
 		// Check if the window was created successfully
         if (m_window == nullptr)
         {
@@ -53,8 +53,25 @@ namespace shovel
             SDL_Quit();
             return false;
         }
+
+		// Set the logical size of the renderer
+        SDL_SetRenderLogicalPresentation(m_renderer, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
         return true;
     }
+
+  //  void Renderer::DrawTexture(Texture& texture, float x, float y)
+  //  {
+		//vec2 size = texture.GetSize();
+
+  //          SDL_FRect destRect;
+  //      destRect.x = x;
+  //      destRect.y = y;
+  //      destRect.w = texture.GetSize().x;
+  //      destRect.h = texture.GetSize().y;
+
+  //      // https://wiki.libsdl.org/SDL3/SDL_RenderTexture
+  //      SDL_RenderTexture(m_renderer, texture.m_texture, NULL, &destRect);
+  //  }
 
     void Renderer::SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
     {
@@ -66,6 +83,32 @@ namespace shovel
     {
 		// Set the draw color for the renderer using float values
         SDL_SetRenderDrawColorFloat(m_renderer, r, g, b, a);
+    }
+
+    void Renderer::DrawTexture(Texture& texture, float x, float y)
+    {
+        vec2 size = texture.GetSize();
+
+        SDL_FRect destRect;
+        destRect.x = x;
+        destRect.y = y;
+        destRect.w = size.x;
+        destRect.h = size.y;
+
+        SDL_RenderTexture(m_renderer, texture.m_texture, NULL, &destRect);
+    }
+
+    void Renderer::DrawTexture(Texture& texture, float x, float y, float angle, float scale)
+    {
+        vec2 size = texture.GetSize();
+
+        SDL_FRect destRect;
+        destRect.x = x;
+        destRect.y = y;
+        destRect.w = size.x * scale;
+        destRect.h = size.y * scale;
+
+		SDL_RenderTextureRotated(m_renderer, texture.m_texture, NULL, &destRect, angle, NULL, SDL_FLIP_NONE);
     }
 
     void Renderer::Clear()

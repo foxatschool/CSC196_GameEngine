@@ -1,9 +1,38 @@
-#include "Model.h"
+#include "Mesh.h"
 #include "Renderer.h"
 
 namespace shovel
 {
-	void Model::Draw(Renderer& renderer, const vec2& position, float rotation, float scale)
+	bool Mesh::Load(const std::string& filename)
+	{
+		std::string buffer;
+		if (!file::ReadTextFile(filename, buffer))
+		{
+			Logger::Error("Failed to load mesh file: {}", filename);
+			return false; // return true to indicate failure
+		}
+
+		std::stringstream stream(buffer);
+
+		stream >> m_color;
+
+		vec2 point;
+
+		while (stream >> point)
+		{
+			m_points.push_back(point);
+		}
+
+		if (!stream.eof())
+		{
+			Logger::Error("Failed to read points from mesh file: {}", filename);
+			return false; // return true to indicate failure
+		}
+
+		return true;
+	}
+
+	void Mesh::Draw(Renderer& renderer, const vec2& position, float rotation, float scale)
 	{
 		if (m_points.empty()) return;
 		// Set the color for the model
@@ -18,11 +47,11 @@ namespace shovel
 			renderer.DrawLine(p1.x, p1.y, p2.x, p2.y);
 		}
 	}
-	void Model::Draw(Renderer& renderer, const Transform& transform)
+	void Mesh::Draw(Renderer& renderer, const Transform& transform)
 	{
 		Draw(renderer, transform.position, transform.rotation, transform.scale);
 	}
-	void Model::CalculateRadius()
+	void Mesh::CalculateRadius()
 	{
 		// Calculate the radius of the model based on the points
 		m_radius = 0;

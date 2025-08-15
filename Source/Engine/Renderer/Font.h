@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
+#include "../Resources/Resource.h"
 
 
 struct TTF_Font;
 namespace shovel
 {
-	class Font {
+	class Font : public Resource {
 	public:
 		Font() = default;
 		~Font();

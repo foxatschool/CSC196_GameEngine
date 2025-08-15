@@ -7,17 +7,11 @@
 namespace shovel
 {
 
-	Engine& GetEngine()
-	{
-		static Engine engine;
-		return engine;
-	}
-
 	bool Engine::Initialize()
 	{
 		m_renderer = std::make_unique<shovel::Renderer>();
 		m_renderer->Init();
-		m_renderer->CreateWindow("Shovel Engine", 1280, 1024);
+		m_renderer->CreateWindow("Shovel Engine", 1280, 1024, false);
 
 		m_input = std::make_unique<shovel::InputSystem>();
 		m_input->Initialize();
@@ -42,10 +36,15 @@ namespace shovel
 
 	void Engine::Shutdown()
 	{
+		//Release resouces from resource manager
+		Resources().Clear();
+
+		// Shut down engine systems
 		m_particleSystem->ShutDown();
 		m_renderer->ShutDown();
 		m_input->Shutdown();
 		m_audio->ShutDown();
+
 	}
 
 	void Engine::Draw()

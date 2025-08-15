@@ -93,7 +93,10 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Source\ThirdParty\SDL3\include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Source\ThirdParty\SDL3\include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;$(SolutionDir)Source\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>EnginePCH.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -115,7 +118,10 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Source\ThirdParty\SDL3\include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Source\ThirdParty\SDL3\include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;$(SolutionDir)Source\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>EnginePCH.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -137,7 +143,10 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Source\ThirdParty\SDL3\include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Source\ThirdParty\SDL3\include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;$(SolutionDir)Source\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>EnginePCH.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -159,7 +168,10 @@
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Source\ThirdParty\SDL3\include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Source\ThirdParty\SDL3\include;$(SolutionDir)Source\ThirdParty\fmod\core\inc;$(SolutionDir)Source\Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EnginePCH.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>EnginePCH.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -175,29 +187,56 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioSystem\AudioClip.cpp" />
     <ClCompile Include="AudioSystem\AudioSystem.cpp" />
+    <ClCompile Include="Components\AudioSource.cpp" />
+    <ClCompile Include="Components\CircleCollider2D.cpp" />
+    <ClCompile Include="Components\MeshRenderer.cpp" />
+    <ClCompile Include="Components\RigidBody.cpp" />
+    <ClCompile Include="Components\SpriteRenderer.cpp" />
     <ClCompile Include="Core\File.cpp" />
     <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="EnginePCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Framework\Actor.cpp" />
     <ClCompile Include="Framework\Game.cpp" />
     <ClCompile Include="Framework\Scene.cpp" />
     <ClCompile Include="Input\InputSystem.cpp" />
     <ClCompile Include="Renderer\Font.cpp" />
-    <ClCompile Include="Renderer\Model.cpp" />
-    <ClCompile Include="Renderer\ParticalSystem.cpp" />
+    <ClCompile Include="Renderer\Mesh.cpp" />
+    <ClCompile Include="Renderer\ParticleSystem.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\Text.cpp" />
+    <ClCompile Include="Renderer\Texture.cpp" />
+    <ClCompile Include="Resources\ResourceManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioSystem\AudioClip.h" />
     <ClInclude Include="AudioSystem\AudioSystem.h" />
+    <ClInclude Include="Components\AudioSource.h" />
+    <ClInclude Include="Components\CircleCollider2D.h" />
+    <ClInclude Include="Components\ColliderComponent.h" />
+    <ClInclude Include="Components\MeshRenderer.h" />
+    <ClInclude Include="Components\RendererComponent.h" />
+    <ClInclude Include="Components\RigidBody.h" />
+    <ClInclude Include="Components\SpriteRenderer.h" />
     <ClInclude Include="Core\File.h" />
     <ClInclude Include="Core\Random.h" />
+    <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\StringHelper.h" />
     <ClInclude Include="Core\Time.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="EngineMinimal.h" />
+    <ClInclude Include="EnginePCH.h" />
     <ClInclude Include="Framework\Actor.h" />
+    <ClInclude Include="FrameWork\Component.h" />
     <ClInclude Include="FrameWork\Game.h" />
+    <ClInclude Include="FrameWork\Object.h" />
     <ClInclude Include="Framework\Scene.h" />
     <ClInclude Include="Input\InputSystem.h" />
     <ClInclude Include="Math\Math.h" />
@@ -205,10 +244,12 @@
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Renderer\Font.h" />
-    <ClInclude Include="Renderer\Model.h" />
-    <ClInclude Include="Renderer\ParticalSystem.h" />
+    <ClInclude Include="Renderer\Mesh.h" />
+    <ClInclude Include="Renderer\ParticleSystem.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Text.h" />
+    <ClInclude Include="Renderer\Texture.h" />
+    <ClInclude Include="Resources\Resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

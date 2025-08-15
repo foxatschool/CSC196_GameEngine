@@ -1,5 +1,6 @@
 #pragma once
 #include "Core/Time.h"
+#include "Core/Singleton.h"
 #include <memory>
 
 namespace shovel
@@ -9,10 +10,9 @@ namespace shovel
 	class InputSystem;
 	class ParticalSystem;
 
-	class Engine
+	class Engine : public Singleton<Engine>
 	{
 	public:
-		Engine() = default;
 		bool Initialize();
 		void Update();
 		void Shutdown();
@@ -24,6 +24,9 @@ namespace shovel
 		ParticalSystem& GetPS() { return *m_particleSystem; }
 
 		Time& GetTime() { return m_time; }
+	private:
+		friend class Singleton<Engine>;
+		Engine() = default;
 
 	private:
 		Time m_time;
@@ -34,5 +37,5 @@ namespace shovel
 		std::unique_ptr<ParticalSystem> m_particleSystem;
 	};
 
-	Engine& GetEngine();
+	inline Engine& GetEngine() { return Engine::Instance(); }
 }

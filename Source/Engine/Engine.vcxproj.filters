@@ -27,6 +27,12 @@
     <Filter Include="Source\FrameWork">
       <UniqueIdentifier>{a52a59a8-e7de-483f-857a-2cefa229a599}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Components">
+      <UniqueIdentifier>{b4ee7dec-43a2-4a28-8027-0636de4c3dcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Resources">
+      <UniqueIdentifier>{2948a889-f4ad-461e-a1ab-857686df5c0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -41,7 +47,7 @@
     <ClCompile Include="AudioSystem\AudioSystem.cpp">
       <Filter>Source\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Model.cpp">
+    <ClCompile Include="Renderer\Mesh.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Renderer.cpp">
@@ -65,8 +71,35 @@
     <ClCompile Include="Core\File.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\ParticalSystem.cpp">
+    <ClCompile Include="Renderer\ParticleSystem.cpp">
       <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePCH.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\SpriteRenderer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\RigidBody.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\CircleCollider2D.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Texture.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSystem\AudioClip.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\ResourceManager.h">
+      <Filter>Source\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MeshRenderer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\AudioSource.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +133,7 @@
     <ClInclude Include="Core\StringHelper.h">
       <Filter>Source\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Model.h">
+    <ClInclude Include="Renderer\Mesh.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Math\Transform.h">
@@ -124,8 +157,53 @@
     <ClInclude Include="Renderer\Text.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\ParticalSystem.h">
+    <ClInclude Include="Renderer\ParticleSystem.h">
       <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Texture.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMinimal.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePCH.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Object.h">
+      <Filter>Source\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWork\Component.h">
+      <Filter>Source\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\RendererComponent.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\SpriteRenderer.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\RigidBody.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ColliderComponent.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\CircleCollider2D.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSystem\AudioClip.h">
+      <Filter>Source\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Resource.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MeshRenderer.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AudioSource.h">
+      <Filter>Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Singleton.h">
+      <Filter>Source\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

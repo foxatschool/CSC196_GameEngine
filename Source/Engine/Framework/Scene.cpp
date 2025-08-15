@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "../Renderer/Renderer.h"
 #include "../Core/StringHelper.h"
+#include "../Components/ColliderComponent.h"
 
 namespace shovel {
 	
@@ -9,7 +10,10 @@ namespace shovel {
 	void Scene::Update(float dt) {
 		for (auto& actor : m_actors) 
 		{
-			actor->Update(dt);
+			if (actor->active)
+			{
+				actor->Update(dt);
+			}
 		}
 
 		// Remove actors that are marked as destroyed
@@ -31,8 +35,13 @@ namespace shovel {
 			{
 				if (actorA == actorB || (actorA->destroyed || actorB->destroyed)) continue;
 
-				float distnce = (actorA->transform.position - actorB->transform.position).Length();
-				if (distnce <= (actorA->GetRadius() + actorB->GetRadius()))
+				auto colliderA = actorA->GetComponent<ColliderComponent>();
+				auto colliderB = actorB->GetComponent<ColliderComponent>();
+
+				if (!colliderA || !colliderB) continue;
+
+				//Make sure both actors have colliders
+				if (colliderA->CheckCollision(*colliderB))
 				{
 					actorA->OnColission(actorB.get());
 					actorB->OnColission(actorA.get());
@@ -46,7 +55,10 @@ namespace shovel {
 	{
 		for (auto& actor : m_actors) 
 		{
+			if (actor->active)
+			{
 			actor->Draw(renderer);
+			}
 		}
 	}
 

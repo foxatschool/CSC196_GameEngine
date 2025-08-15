@@ -36,8 +36,12 @@ void Enemy::Update(float dt)
     }
     shovel::vec2 force = shovel::vec2{ 1,0 }.Rotate(shovel::math::degTorad(transform.rotation)) * speed;
 
-	velocity += force * dt; // Apply the force to the enemy's velocity
-
+	//velocity += force * dt; // Apply the force to the enemy's velocity
+    auto rb = GetComponent<shovel::RigidBody>();
+    if (rb)
+    {
+        rb->velocity += force * dt;
+    }
 
     transform.position.x = shovel::math::wrap(transform.position.x, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
     transform.position.y = shovel::math::wrap(transform.position.y, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
@@ -48,13 +52,26 @@ void Enemy::Update(float dt)
 		fireTimer = fireTime; // Reset the fire timer
         // Apply the force to the enemy's velocity using the delta time
         velocity += force * dt;
-        std::shared_ptr<shovel::Model> playerModel = std::make_shared<shovel::Model>(GameData::ShipPoint, shovel::vec3{ 1.0,0.0,0.0 });
+        std::shared_ptr<shovel::Mesh> playerModel = std::make_shared<shovel::Mesh>(GameData::ShipPoint, shovel::vec3{ 1.0,0.0,0.0 });
         shovel::Transform transform{ this->transform.position, this->transform.rotation, 2.5 };
-        auto rocket = std::make_unique<Rocket>(transform, playerModel);
+        auto rocket = std::make_unique<Rocket>(transform);//, playerModel);
         rocket->speed = 500.0f;
         rocket->lifespan = 1.5f;
         rocket->name = "Rocket";
         rocket->tag = "Enemy";
+
+		auto spriteRenderer = std::make_unique<shovel::SpriteRenderer>();
+		spriteRenderer->textureName = "Rocket"; // todo "put texture location here"
+
+        rocket->AddComponent(spriteRenderer);
+
+        auto rb = std::make_unique<shovel::RigidBody>();
+        rocket->AddComponent(std::move(rb));
+
+        auto collider = std::make_unique<shovel::<CircleCollider2D>();
+        collider->radius = 60;
+        rocket->AddComponent(std::move(collider));
+
         scene->AddActor(std::move(rocket));
 	}
 

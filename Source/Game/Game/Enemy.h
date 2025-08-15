@@ -9,8 +9,8 @@ public:
 	float fireTime = 3.0f; // Time between shots
 public:
 	Enemy() = default;
-	Enemy(const shovel::Transform transform, std::shared_ptr<class shovel::Model> model) :
-		Actor{ transform, model }
+	Enemy(const shovel::Transform transform) :
+		Actor{ transform }
 	{}
 
 	void Update(float dt) override;

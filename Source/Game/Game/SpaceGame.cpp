@@ -12,6 +12,7 @@
 #include "Renderer/ParticalSystem.h"
 #include "Framework/Scene.h"
 #include "../GameData.h"
+#include "Resources/ResourceManager.h"
 
 
 
@@ -19,18 +20,18 @@ bool SpaceGame::Initialize()
 {
 	m_scene = std::make_unique<shovel::Scene>(this);
 
-	m_titleFont = std::make_shared<shovel::Font>();
-	m_titleFont->Load("Eight-Bit Madness.ttf", 128);
+	//m_titleFont = std::make_shared<shovel::Font>();
+	//m_titleFont->Load("Eight-Bit Madness.ttf", 128);
 
-	m_uiFont = std::make_shared<shovel::Font>();
-	m_uiFont->Load("Eight-Bit Madness.ttf", 48);
+	//m_uiFont = std::make_shared<shovel::Font>();
+	//m_uiFont->Load("Eight-Bit Madness.ttf", 48);
 
-	m_titleText = std::make_unique<shovel::Text>(m_titleFont);
-	m_scoreText = std::make_unique<shovel::Text>(m_uiFont);
-	m_livesText = std::make_unique<shovel::Text>(m_uiFont);
-    m_bulletText = std::make_unique<shovel::Text>(m_uiFont);
+	m_titleText = std::make_unique<shovel::Text>(shovel::Resources().GetWithID<shovel::Font>("title_font", "Eight-Bit Madness.ttf", 128.0f));
+	m_scoreText = std::make_unique<shovel::Text>(shovel::Resources().GetWithID<shovel::Font>("ui_font", "Eight-Bit Madness.ttf", 48.0f));
+	m_livesText = std::make_unique<shovel::Text>(shovel::Resources().GetWithID<shovel::Font>("ui_font", "Eight-Bit Madness.ttf", 48.0f));
+    m_bulletText = std::make_unique<shovel::Text>(shovel::Resources().GetWithID<shovel::Font>("ui_font", "Eight-Bit Madness.ttf", 48.0f));
 
-    m_bulletModel = std::make_unique<shovel::Model>(GameData::BulletPoints, shovel::vec3{ 1.0,1.0,1.0 });
+    m_bulletModel = std::make_unique<shovel::Mesh>(GameData::BulletPoints, shovel::vec3{ 1.0,1.0,1.0 });
     return true;
 }
 
@@ -69,13 +70,25 @@ void SpaceGame::Update(float dt)
     {
         m_scene->RemoveAllActors();
         //Create player.
-        std::shared_ptr<shovel::Model> playerModel = std::make_shared<shovel::Model>(GameData::ShipPoint, shovel::vec3{ 0,1,0 });
+        std::shared_ptr<shovel::Mesh> playerModel = std::make_shared<shovel::Mesh>(GameData::ShipPoint, shovel::vec3{ 0,1,0 });
         shovel::Transform transform{ shovel::vec2{shovel::GetEngine().GetRenderer().GetWidth() * 0.5f, shovel::GetEngine().GetRenderer().GetHeight() * 0.5f}, 0, 8 };
-        auto player = std::make_unique<Player>(transform, playerModel);
-        player->damping = 1.5f;
+        auto player = std::make_unique<Player>(transform);
         player->speed = 500.0f;
         player->name = "Player";
         player->tag = "Player";
+
+        auto spriteRenderer = std::make_unique<shovel::SpriteRenderer>();
+        spriteRenderer->textureName = "Rocket"; // todo "put texture location here"
+        player->AddComponent(spriteRenderer);
+
+		auto rb = std::make_unique<shovel::RigidBody>();
+		rb->damping = 1.5f;
+		player->AddComponent(std::move(rb));
+
+        auto collider = std::make_unique<shovel::<CircleCollider2D>();
+		collider->radius = 60;
+		player->AddComponent(std::move(collider));
+
         m_scene->AddActor(std::move(player));
         m_gameState = SpaceGame::GameState::Game;
     }
@@ -150,20 +163,35 @@ void SpaceGame::SpawnEnemy()
     Player* player = m_scene->GetActorByName<Player>("Player");
     if (player)
     {
-        std::shared_ptr<shovel::Model> enemyModel = std::make_shared<shovel::Model>(GameData::ShipPoint, shovel::vec3{ 1,1,1 });
+        std::shared_ptr<shovel::Mesh> enemyModel = std::make_shared<shovel::Mesh>(GameData::ShipPoint, shovel::vec3{ 1,1,1 });
 
         //spawn enemy at a random position around the player
         shovel::vec2 position = player->transform.position + shovel::random::onUnitCircle() * shovel::random::getReal(200.0f, 500.0f);
         shovel::Transform transform{ position, shovel::random::getReal<float>(0.0f, 360.0f), 8 };
 
         // Create a new enemy actor
-        std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
+        std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform);
         enemy->velocity = shovel::vec2{ shovel::random::getReal() * 100 - 50, shovel::random::getReal() * 100 - 50 };
-        enemy->damping = 1.5f;
         enemy->fireTimer = 100000000.0f; // Time between shots
         enemy->name = "Enemy";
         enemy->tag = "Enemy";
         enemy->speed = 0;
+
+        //auto spriteRenderer = std::make_unique<shovel::SpriteRenderer>();
+        //spriteRenderer->textureName = "Rocket"; // todo "put texture location here"
+        //enemy->AddComponent(spriteRenderer);
+        auto meshRenderer = std::make_unique < shovel::Meshrenderer>();
+		meshRenderer->meshName = "Ship";
+		enemy->AddComponent(std::move(meshRenderer));
+
+        auto rb = std::make_unique<shovel::RigidBody>();
+        rb->damping = 1.5f;
+        enemy->AddComponent(std::move(rb));
+
+        auto collider = std::make_unique<shovel::<CircleCollider2D>();
+        collider->radius = 60;
+        enemy->AddComponent(std::move(collider));
+
         m_scene->AddActor(std::move(enemy));
     }
 

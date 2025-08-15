@@ -1,20 +1,35 @@
 #include "Actor.h"
 #include "../Renderer/Model.h"
+#include "../Components/RendererComponent.h"
 
 namespace shovel {
 	void Actor::Update(float dt) 
 	{
 		if (destroyed) return;
 		
-		if (lifespan != 0)
+		if (lifespan > 0)
 		{
 			lifespan -= dt;
-			destroyed = lifespan <= 0;
+			if (lifespan <= 0)
+			{
+				destroyed = true;
+				return;
+			}
+		}
+
+		for (auto& component : m_components) 
+		{
+			if (component->active)
+			{
+				component->Update(dt);
+			}
 		}
 
 		// Update the position based on velocity and damping
-		transform.position += velocity * dt;
-		velocity *= (1.0f / (1.0f + (damping * dt))); // Dampen velocity
+		for (auto& component : m_components)
+		{
+			if (component->active) component->Update(dt);
+		}
 	}
 
 	void Actor::Draw(Renderer& renderer) 
@@ -22,11 +37,24 @@ namespace shovel {
 		if (destroyed) return;
 		// Draw the model with the current transform
 		m_model->Draw(renderer, transform);
+
+		for (auto& component : m_components)
+		{
+			if (component->active)
+			{
+				auto rendererComponent = dynamic_cast<RendererComponent*>(component.get());
+				if (rendererComponent)
+				{
+					component->Draw(renderer);
+				}
+			}
+		}
 	}
 
-	float Actor::GetRadius()
+	void Actor::AddComponent(std::unique_ptr<Component> component)
 	{
-		return (m_model) ? m_model->GetRadius() * transform.scale * 0.9f: 0;
+		component->owner = this;
+		m_components.push_back(std::move(component));
 	}
 
 }

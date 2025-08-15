@@ -13,7 +13,12 @@ void Rocket::Update(float dt)
 	// Update the transform rotation based on input
 	shovel::vec2 force = shovel::vec2{ 1, 0 }.Rotate(shovel::math::degTorad(transform.rotation)) * speed;
 
-	velocity = force;
+	//velocity = force;
+	auto rb = GetComponent<shovel::RigidBody>();
+	if (rb)
+	{
+		rb->velocity = force;
+	}
 
 	transform.position.x = shovel::math::wrap(transform.position.x, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
 	transform.position.y = shovel::math::wrap(transform.position.y, 0.0f, (float)shovel::GetEngine().GetRenderer().GetHeight());

@@ -3,6 +3,7 @@
 #include "Renderer/Text.h"
 #include "Renderer/Font.h"
 #include "../GameData.h"
+#include "Renderer/Mesh.h"
 
 #include "../Engine/Core/Random.h"
 #include "Player.h"
@@ -42,14 +43,12 @@ private:
 	float m_enemySpawnTimer{ 0 };
 	float m_stateTimer{ 0 };
 
-	std::shared_ptr<shovel::Font> m_titleFont;
-	std::shared_ptr<shovel::Font> m_uiFont;
 
 	std::unique_ptr<shovel::Text> m_titleText;
 	std::unique_ptr<shovel::Text> m_scoreText;
 	std::unique_ptr<shovel::Text> m_livesText;
 	std::unique_ptr<shovel::Text> m_bulletText;
 
-	std::unique_ptr<shovel::Model> m_bulletModel;
+	std::unique_ptr<shovel::Mesh> m_bulletModel;
 
 };

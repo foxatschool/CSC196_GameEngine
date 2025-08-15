@@ -8,9 +8,10 @@
 #include "Math/Vector3.h"
 #include "../GameData.h"
 #include "Framework/Scene.h"
-#include "Renderer/Model.h"
-#include "Renderer/ParticalSystem.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/ParticleSystem.h"
 #include "Core/Random.h"
+#include "Components/SpriteRenderer.h"
 
 #include "SDL3/SDL.h"
 
@@ -20,13 +21,33 @@ void Player::Shoot()
 	if (!reloded)
 	{
 		bulletCount--;
-		std::shared_ptr<shovel::Model> bulletModel = std::make_shared<shovel::Model>(GameData::BulletPoints, shovel::vec3{ 1.0,1.0,1.0 });
+		std::shared_ptr<shovel::Mesh> bulletModel = std::make_shared<shovel::Mesh>(GameData::BulletPoints, shovel::vec3{ 1.0,1.0,1.0 });
 		shovel::Transform transform{ this->transform.position, this->transform.rotation, 2.5 };
-		auto rocket = std::make_unique<Rocket>(transform, bulletModel);
+		auto rocket = std::make_unique<Rocket>(transform);
 		rocket->speed = 500.0f;
 		rocket->lifespan = 1.5f;
 		rocket->name = "Rocket";
 		rocket->tag = "Player";
+
+		auto spriteRenderer = std::make_unique<shovel::SpriteRenderer>();
+		spriteRenderer->textureName = "Rocket"; // todo "put texture location here"
+		rocket->AddComponent(spriteRenderer);
+
+		auto rb = std::make_unique<shovel::RigidBody>();
+		rocket->AddComponent(std::move(rb));
+
+		auto collider = std::make_unique<shovel::CircleCollider2D>();
+		collider->radius = 60;
+		rocket->AddComponent(std::move(collider));
+
+		auto sound = shovel::Resources().Get<shovel::AudioClip>("bass.wav", shovel::GetEngine().GetAudio()).get();
+		if (!sound)
+		{
+			shovel::GetEngine().GetAudio().PlaySound(*sound);
+		}
+		
+
+
 
 		scene->AddActor(std::move(rocket));
 		
@@ -65,7 +86,12 @@ void Player::Update(float dt)
     shovel::vec2 force = direction.Rotate(shovel::math::degTorad(transform.rotation)) * thrust * speed;
     
 	// Apply the force to the player's velocity using the delta time
-    velocity += force * dt;
+    //velocity += force * dt;
+	auto rb = GetComponent<shovel::RigidBody>();
+	if (rb)
+	{
+		rb->velocity += force * dt;
+	}
 
 	transform.position.x = shovel::math::wrap(transform.position.x, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
 	transform.position.y = shovel::math::wrap(transform.position.y, 0.0f, (float)shovel::GetEngine().GetRenderer().GetHeight());

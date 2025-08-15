@@ -8,6 +8,9 @@
     <Filter Include="Game">
       <UniqueIdentifier>{44c42eae-959b-4d02-ab64-18d280735ad5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{36727eae-7184-4dd2-b95c-bb41621d0658}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Enemy.cpp">
@@ -26,6 +29,9 @@
     <ClCompile Include="Game\Rocket.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="GamePCH.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Player.h">
@@ -43,5 +49,13 @@
     <ClInclude Include="Game\Rocket.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="GamePCH.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\Build\Assets\Meshes\Enemy.txt">
+      <Filter>Assets</Filter>
+    </Text>
   </ItemGroup>
 </Project>

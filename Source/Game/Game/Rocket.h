@@ -10,8 +10,8 @@ public:
 public:
 
 	Rocket() = default;
-	Rocket(const shovel::Transform transform, std::shared_ptr<class shovel::Model> model) :
-		Actor{ transform, model }
+	Rocket(const shovel::Transform transform) :
+		Actor{ transform }
 	{}
 
 	// Inherited via Actor
