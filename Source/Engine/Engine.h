@@ -1,6 +1,9 @@
 #pragma once
 #include "Core/Time.h"
 #include "Core/Singleton.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/ParticleSystem.h"
+#include "Input/InputSystem.h"
 #include <memory>
 
 namespace shovel
