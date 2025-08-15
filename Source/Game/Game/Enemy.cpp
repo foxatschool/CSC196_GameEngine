@@ -10,6 +10,8 @@
 #include "Math/Math.h"
 #include "Math/Vector2.h"
 #include "../GameData.h"
+#include "Renderer/ParticleSystem.h"
+#include "Renderer/Mesh.h"
 #include "Rocket.h"
 
 void Enemy::Update(float dt)

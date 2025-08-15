@@ -6,7 +6,7 @@ namespace shovel
 	class SpriteRenderer : public RendererComponent
 	{
 	public:
-
+		std::string textureName;
 	public:
 		void Update(float dt);
 		// Inherited via RendererComponent

@@ -2,7 +2,7 @@
 #include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
 #include "AudioSystem/AudioSystem.h"
-#include "Renderer/ParticalSystem.h"
+#include "Renderer/ParticleSystem.h"
 
 namespace shovel
 {
@@ -20,7 +20,7 @@ namespace shovel
 		m_audio = std::make_unique<shovel::AudioSystem>();
 		m_audio->Init();
 
-		m_particleSystem = std::make_unique<shovel::ParticalSystem>();
+		m_particleSystem = std::make_unique<shovel::ParticleSystem>();
 		m_particleSystem->Initialize();
 
 		return true;

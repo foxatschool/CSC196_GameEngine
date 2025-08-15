@@ -1,10 +1,10 @@
-#include "ParticalSystem.h"
+#include "ParticleSystem.h"
 #include "Renderer.h"
 
 namespace shovel
 {
 
-    bool ParticalSystem::Initialize(int poolSize)
+    bool ParticleSystem::Initialize(int poolSize)
     {
         //reserve particles in pool
 		m_particles.resize(poolSize); // Reserve space for 1000 particles
@@ -12,12 +12,12 @@ namespace shovel
         return true;
     }
 
-    void ParticalSystem::ShutDown()
+    void ParticleSystem::ShutDown()
     {
 		m_particles.clear(); // Clear the particle pool
     }
 
-    void ParticalSystem::Update(float dt)
+    void ParticleSystem::Update(float dt)
     {
 		for (auto& particle : m_particles)
 		{
@@ -31,7 +31,7 @@ namespace shovel
 		}
     }
 
-    void ParticalSystem::Draw(Renderer& renderer)
+    void ParticleSystem::Draw(Renderer& renderer)
     {
 		for (auto& particle : m_particles)
 		{
@@ -44,7 +44,7 @@ namespace shovel
 			}
 		}
     }
-    void ParticalSystem::AddParticle(const Particle& particle)
+    void ParticleSystem::AddParticle(const Particle& particle)
     {
 		Particle* freeParticle = GetFreeParticle();
 		if (freeParticle)
@@ -54,7 +54,7 @@ namespace shovel
 			
 		}
     }
-    Particle* ParticalSystem::GetFreeParticle()
+    Particle* ParticleSystem::GetFreeParticle()
     {
 		for (auto& particle : m_particles)
 		{

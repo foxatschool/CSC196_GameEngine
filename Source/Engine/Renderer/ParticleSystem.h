@@ -17,10 +17,10 @@ namespace shovel
 		vec3 color;
 	};
 
-	class ParticalSystem
+	class ParticleSystem
 	{
 	public:
-		ParticalSystem() = default;
+		ParticleSystem() = default;
 
 		bool Initialize(int poolSize = 1000);
 		void ShutDown();

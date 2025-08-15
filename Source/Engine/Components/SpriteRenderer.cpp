@@ -12,7 +12,7 @@ namespace shovel
 
 	void SpriteRenderer::Draw(Renderer& renderer)
 	{
-		auto texture = Recources().Get<Texture>(textureName, renderer).get();
+		auto texture = Resources().Get<Texture>(textureName, renderer).get();
 
 		if (texture)
 		{

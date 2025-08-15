@@ -1,3 +1,4 @@
+#pragma once
 #include "Resource.h"
 #include "Core/StringHelper.h"
 #include "Core/Singleton.h"
@@ -10,6 +11,11 @@ namespace shovel
 	class ResourceManager : public Singleton<ResourceManager>
 	{
 	public:
+		void Clear()
+		{
+			m_resources.clear();
+		}
+
 		template <typename T, typename ... Args>
 		res_t<T> Get(const std::string& name, Args&& ... args);
 
