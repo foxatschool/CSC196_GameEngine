@@ -3,15 +3,13 @@
 #include "Core/Singleton.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/ParticleSystem.h"
+#include "AudioSystem/AudioSystem.h"
 #include "Input/InputSystem.h"
 #include <memory>
 
 namespace shovel
 {
-	class Renderer;
-	class AudioSystem;
-	class InputSystem;
-	class ParticleSystem;
+	
 
 	class Engine : public Singleton<Engine>
 	{

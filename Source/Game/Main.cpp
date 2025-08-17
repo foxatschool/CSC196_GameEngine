@@ -165,7 +165,6 @@ int main(int argc, char* argv[]) {
 		//Draw the game scene
 		game->Draw(shovel::GetEngine().GetRenderer());
            
-
         // Render the screen
         shovel::GetEngine().GetRenderer().Present();
     }

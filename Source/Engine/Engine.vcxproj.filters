@@ -92,9 +92,6 @@
     <ClCompile Include="AudioSystem\AudioClip.cpp">
       <Filter>Source\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Resources\ResourceManager.h">
-      <Filter>Source\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="Components\MeshRenderer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -203,6 +200,12 @@
       <Filter>Source\Components</Filter>
     </ClInclude>
     <ClInclude Include="Core\Singleton.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceManager.h">
+      <Filter>Source\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
       <Filter>Source\Core</Filter>
     </ClInclude>
   </ItemGroup>

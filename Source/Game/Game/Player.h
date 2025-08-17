@@ -13,7 +13,7 @@ public:
 public:
 	Player() = default;
 	Player(const shovel::Transform& transform) :
-		Actor{ transform }
+		Actor{ transform}
 	{}
 
 	void Shoot();

@@ -2,14 +2,14 @@
 
 #include "Framework/Scene.h"
 #include "Math/Vector2.h"
-#include "Renderer/Model.h"
+#include "Renderer/Mesh.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Core/Random.h"
 #include "Engine.h"
 #include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
-#include "Renderer/ParticalSystem.h"
+#include "Renderer/ParticleSystem.h"
 #include "Framework/Scene.h"
 #include "../GameData.h"
 #include "Resources/ResourceManager.h"
@@ -81,16 +81,18 @@ void SpaceGame::Update(float dt)
         spriteRenderer->textureName = "Rocket"; // todo "put texture location here"
         player->AddComponent(spriteRenderer);
 
+
 		auto rb = std::make_unique<shovel::RigidBody>();
 		rb->damping = 1.5f;
 		player->AddComponent(std::move(rb));
 
-        auto collider = std::make_unique<shovel::<CircleCollider2D>();
+        auto collider = std::make_unique<shovel::CircleCollider2D>();
 		collider->radius = 60;
 		player->AddComponent(std::move(collider));
 
         m_scene->AddActor(std::move(player));
         m_gameState = SpaceGame::GameState::Game;
+
     }
         break;
     case SpaceGame::GameState::PlayerDead:
@@ -180,7 +182,7 @@ void SpaceGame::SpawnEnemy()
         //auto spriteRenderer = std::make_unique<shovel::SpriteRenderer>();
         //spriteRenderer->textureName = "Rocket"; // todo "put texture location here"
         //enemy->AddComponent(spriteRenderer);
-        auto meshRenderer = std::make_unique < shovel::Meshrenderer>();
+        auto meshRenderer = std::make_unique<shovel::MeshRenderer>();
 		meshRenderer->meshName = "Ship";
 		enemy->AddComponent(std::move(meshRenderer));
 
@@ -188,7 +190,7 @@ void SpaceGame::SpawnEnemy()
         rb->damping = 1.5f;
         enemy->AddComponent(std::move(rb));
 
-        auto collider = std::make_unique<shovel::<CircleCollider2D>();
+        auto collider = std::make_unique<shovel::CircleCollider2D>();
         collider->radius = 60;
         enemy->AddComponent(std::move(collider));
 

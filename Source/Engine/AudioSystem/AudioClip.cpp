@@ -13,7 +13,7 @@ namespace shovel
 
     bool AudioClip::Load(const std::string& filename, AudioSystem& audioSystem)
     {
-        FMOD_RESULT result = audioSystem.m_system->createSound(filename.c_str(), FMOD_DEFAULT, 0, &m_sound);
+        FMOD_RESULT result = audioSystem.m_aSystem->createSound(filename.c_str(), FMOD_DEFAULT, 0, &m_sound);
         if (!AudioSystem::CheckFMODResult(result)) return false;
         return true;
     }

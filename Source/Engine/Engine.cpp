@@ -7,6 +7,7 @@
 namespace shovel
 {
 
+
 	bool Engine::Initialize()
 	{
 		m_renderer = std::make_unique<shovel::Renderer>();

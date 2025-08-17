@@ -103,10 +103,10 @@ namespace shovel
         vec2 size = texture.GetSize();
 
         SDL_FRect destRect;
-        destRect.x = x;
-        destRect.y = y;
         destRect.w = size.x * scale;
         destRect.h = size.y * scale;
+        destRect.x = x - destRect.w * 0.5f;
+        destRect.y = y - destRect.h * 0.5f;
 
 		SDL_RenderTextureRotated(m_renderer, texture.m_texture, NULL, &destRect, angle, NULL, SDL_FLIP_NONE);
     }

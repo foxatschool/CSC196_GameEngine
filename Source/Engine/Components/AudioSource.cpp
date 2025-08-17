@@ -1,6 +1,7 @@
 #include "EnginePCH.h"
 #include "AudioSource.h"
-#include "Audio/AudioClip.h"
+#include "AudioSystem/AudioClip.h"
+#include "AudioSystem/AudioSystem.h"
 #include "Engine.h"
 
 namespace shovel
@@ -15,7 +16,7 @@ namespace shovel
 		auto audioClip = Resources().Get<AudioClip>(audioClipName, GetEngine().GetAudio());
 		if (audioClip)
 		{
-			GetEngine().GetAudio().PlaySound(*audioClip);
+			GetEngine().GetAudio().PlaySound(audioClip);
 		}
 	}
 }
