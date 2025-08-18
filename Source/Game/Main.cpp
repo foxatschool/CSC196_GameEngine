@@ -5,7 +5,7 @@
 #include "Core/Time.h"
 #include "Input\InputSystem.h"
 #include "AudioSystem\AudioSystem.h"
-#include "Renderer\Model.h"
+#include "Renderer\Mesh.h"
 #include "Math\Transform.h"
 #include "Framework/Actor.h"
 #include "Framework/Scene.h"
@@ -16,6 +16,7 @@
 #include "../Engine/Renderer/Texture.h"
 #include "Game/Player.h"
 #include "Game/SpaceGame.h"
+#include "Core/Logger.h"
 
 #include <SDL3/SDL.h>
 #include <iostream>
@@ -26,7 +27,7 @@
 
 int main(int argc, char* argv[]) {
     shovel::file::SetCurrentDirectory("Assets");
-	//shovel::Logger::info("current directory is: " + shovel::file::GetCurrentDirectory());
+	shovel::Logger::Info("current directory is: " + shovel::file::GetCurrentDirectory());
 
     // command line arguments
     std::cout << argc << std::endl;

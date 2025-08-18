@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "Renderer.h"
+#include "Logger.h"
 
 namespace shovel
 {
@@ -8,7 +9,7 @@ namespace shovel
 		std::string buffer;
 		if (!file::ReadTextFile(filename, buffer))
 		{
-			Logger::Error("Failed to load mesh file: {}", filename);
+			shovel::Logger::Error("Failed to load mesh file: {}", filename);
 			return false; // return true to indicate failure
 		}
 
@@ -25,7 +26,7 @@ namespace shovel
 
 		if (!stream.eof())
 		{
-			Logger::Error("Failed to read points from mesh file: {}", filename);
+			shovel::Logger::Error("Failed to read points from mesh file: {}", filename);
 			return false; // return true to indicate failure
 		}
 

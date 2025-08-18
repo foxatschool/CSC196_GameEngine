@@ -81,20 +81,17 @@ namespace shovel
 		}
 
 		template<typename... Args>
-		static void Warning(std::format_string<Args...> fmt, Args&&... args)
-		{
-			Log(LogLevel::WARNING, std::format(fmt, std::forward<args>(args)...));
-		}
-
-		template<typename... Args>
 		static void Debug(std::format_string<Args...> fmt, Args&&... args)
 		{
 			Log(LogLevel::DEBUG, std::format(fmt, std::forward<args>(args)...));
 		}
 
+		template<typename... Args>
+		static void Unknown(std::format_string<Args...> fmt, Args&&... args)
+		{
+			Log(LogLevel::, std::format(fmt, std::forward<args>(args)...));
+		}
 	private:
 		inline static LogLevel s_enabledLevels = LogLevel::ALL;
 	};
-
-
 }

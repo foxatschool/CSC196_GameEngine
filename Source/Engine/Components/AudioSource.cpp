@@ -16,7 +16,7 @@ namespace shovel
 		auto audioClip = Resources().Get<AudioClip>(audioClipName, GetEngine().GetAudio());
 		if (audioClip)
 		{
-			GetEngine().GetAudio().PlaySound(audioClip);
+			GetEngine().GetAudio().PlaySound(*audioClip);
 		}
 	}
 }

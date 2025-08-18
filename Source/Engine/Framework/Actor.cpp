@@ -36,8 +36,6 @@ namespace shovel {
 	{
 		if (destroyed) return;
 		// Draw the model with the current transform
-		m_model->Draw(renderer, transform);
-
 		for (auto& component : m_components)
 		{
 			if (component->active)
@@ -45,7 +43,7 @@ namespace shovel {
 				auto rendererComponent = dynamic_cast<RendererComponent*>(component.get());
 				if (rendererComponent)
 				{
-					component->Draw(renderer);
+					rendererComponent->Draw(renderer);
 				}
 			}
 		}
