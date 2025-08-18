@@ -17,7 +17,7 @@ namespace shovel
 
 		bool AddSound(const std::string& filename, const std::string& name = "");
 		bool PlaySound(const std::string& name, bool loop = false);
-		bool playSound(class AudioClip& audioClip);
+		bool PlaySound(class AudioClip& audioClip);
 
 	private:
 		static bool CheckFMODResult(FMOD_RESULT result);

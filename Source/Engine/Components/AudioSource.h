@@ -13,5 +13,6 @@ namespace shovel
 		// Inherited via Component
 		void Update(float dt) override;
 		void Play();
+		bool PlaySound(class AudioClip& audioClip);
 	};
 }

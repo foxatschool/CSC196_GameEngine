@@ -75,8 +75,8 @@ int main(int argc, char* argv[]) {
 	shovel::vec2 v{ 34.5f, 65.5f };
 	std::cout << v << std::endl;
 
-    shovel::vec3 v{ 34.5f, 65.5f, 55.6f };
-    std::cout << v << std::endl;
+    shovel::vec3 v3{ 34.5f, 65.5f, 55.6f };
+    std::cout << v3 << std::endl;
 
     std::string vstr("{ 23.4 , 35.7 }");
     std::stringstream vstream(vstr);

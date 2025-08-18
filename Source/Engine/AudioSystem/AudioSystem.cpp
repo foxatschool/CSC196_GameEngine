@@ -81,7 +81,7 @@ namespace shovel
 		return true;
 	}
 
-	bool AudioSystem::playSound(AudioClip& audioClip)
+	bool AudioSystem::PlaySound(AudioClip& audioClip)
 	{
 		FMOD_RESULT result = m_aSystem->playSound(audioClip.m_sound, 0, false, nullptr);
 		if (!CheckFMODResult(result)) return false;

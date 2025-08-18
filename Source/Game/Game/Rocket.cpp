@@ -1,6 +1,6 @@
 #include "Rocket.h"
 #include "Core/Random.h"
-#include "Renderer/ParticalSystem.h"
+#include "Renderer/ParticleSystem.h"
 #include "Engine.h"
 #include "Player.h"
 #include "Framework/Scene.h"

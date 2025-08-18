@@ -5,8 +5,8 @@
 #include "Framework/Scene.h"
 #include "Framework/Game.h"
 #include "Renderer/Renderer.h"
-#include "Renderer/ParticalSystem.h"
-#include "Renderer/Model.h"
+#include "Renderer/ParticleSystem.h"
+#include "Renderer/Mesh.h"
 #include "Math/Math.h"
 #include "Math/Vector2.h"
 #include "../GameData.h"
@@ -70,7 +70,7 @@ void Enemy::Update(float dt)
         auto rb = std::make_unique<shovel::RigidBody>();
         rocket->AddComponent(std::move(rb));
 
-        auto collider = std::make_unique<shovel::<CircleCollider2D>();
+        auto collider = std::make_unique<shovel::CircleCollider2D>();
         collider->radius = 60;
         rocket->AddComponent(std::move(collider));
 
