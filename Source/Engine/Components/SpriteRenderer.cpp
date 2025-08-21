@@ -28,6 +28,6 @@ namespace shovel
 	{
 		Object::Read(value);
 
-		JSON_READ(value, textureName);
+		JSON_READ_NAME(value, "texture_name", textureName);
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
-#include <cassert>
 #include "Math.h"
+#include <cassert>
 #include <iostream>
 
 namespace shovel

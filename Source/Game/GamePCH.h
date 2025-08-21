@@ -25,5 +25,6 @@
 
 //core
 #include "Core/Logger.h"
+#include "Core/Json.h"
 
 

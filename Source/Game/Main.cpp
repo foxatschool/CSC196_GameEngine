@@ -1,29 +1,4 @@
-#include "../Engine/Core/Random.h"
-#include "Renderer\Renderer.h"
-#include "Math\Vector2.h"
-#include "Math\Vector3.h"
-#include "Core/Time.h"
-#include "Input\InputSystem.h"
-#include "AudioSystem\AudioSystem.h"
-#include "Renderer\Mesh.h"
-#include "Math\Transform.h"
-#include "Framework/Actor.h"
-#include "Framework/Scene.h"
-#include "Engine.h"
-#include "Renderer/Text.h"
-#include "Renderer/Font.h"
-#include "Core/File.h"
-#include "../Engine/Renderer/Texture.h"
-#include "Game/Player.h"
 #include "Game/SpaceGame.h"
-#include "Core/Logger.h"
-
-#include <SDL3/SDL.h>
-#include <iostream>
-#include <vector>
-#include <fmod.hpp>
-#include <memory>
-
 class A
 {
 public:

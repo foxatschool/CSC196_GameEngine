@@ -17,7 +17,7 @@ namespace shovel
 		Object::Read(value);
 
 		JSON_READ(value, damping);
-		JSON_READ(value, velocity);
+		shovel::json::Read(value, "velocity", velocity);
 	}
 
 }

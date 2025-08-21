@@ -1,7 +1,9 @@
 #pragma once
 #include "Math/Vector2.h"
 #include "Math/Vector3.h"
-#include "../../rapidjson/rapidjson-master/include/rapidjson/document.h"
+
+#include <rapidjson/document.h>
+#include <string>
 
 #define JSON_READ(value, data)					shovel::json::Read(value, #data, data)
 #define JSON_READ_NAME(value, name, data)		shovel::json::Read(value, name, data)
@@ -21,6 +23,4 @@ namespace shovel::json
 	bool Read(const value_t& value, const std::string& name, std::string& data);
 	bool Read(const value_t& value, const std::string& name, vec2& data);
 	bool Read(const value_t& value, const std::string& name, vec3& data);
-
-
 }

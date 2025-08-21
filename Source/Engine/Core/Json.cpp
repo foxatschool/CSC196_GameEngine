@@ -7,7 +7,7 @@
 
 namespace shovel::json
 {
-    bool json::Load(const std::string& filename, document_t& document)
+    bool Load(const std::string& filename, document_t& document)
     {
         // read the file into a string
         std::string buffer;
