@@ -1,5 +1,5 @@
 #pragma once
-
+#include "../Core/Serializable.h"
 #include "../Core/StringHelper.h"
 #include <vector>
 #include <memory>
@@ -8,7 +8,7 @@
 
 namespace shovel {
 	class Game;
-	class Scene {
+	class Scene : public Serializable {
 	public:
 		Scene(Game* game) : m_game{ game } {};
 
@@ -16,19 +16,24 @@ namespace shovel {
 		void Draw(class Renderer& renderer);
 
 		void AddActor(std::unique_ptr < class Actor >);
-		void RemoveAllActors();
+		void RemoveAllActors(bool force = false);
 
 		template<typename T = Actor>
 		T* GetActorByName(const std::string& name);
 
 		template<typename T = Actor>
 		std::vector<T*> GetActorsByTag(const std::string& tag);
+
+		void Read(const json::value_t& value) override;
 		
 		class Game* GetGame() const { return m_game; }
 
 	private:
 		class Game* m_game{ nullptr };
 		std::list <std::unique_ptr <class Actor>> m_actors;
+
+		// Inherited via Serializable
+		
 	};
 
 	// This function returns a pointer to an actor of type T with the specified name.

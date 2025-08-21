@@ -8,6 +8,7 @@ namespace shovel
 	public:
 		std::string meshName;
 	public:
+		CLASS_PROTOTYPE(MeshRenderer)
 		void Update(float dt);
 		// Inherited via RendererComponent
 		void Draw(Renderer& renderer);

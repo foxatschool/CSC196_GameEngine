@@ -17,4 +17,8 @@ namespace shovel
 		}
 		return false;
 	}
+	void CircleCollider2D::Read(const json::value_t& value)
+	{
+
+	}
 }

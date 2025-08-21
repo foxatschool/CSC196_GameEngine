@@ -80,9 +80,6 @@
     <ClCompile Include="Components\SpriteRenderer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Components\RigidBody.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Components\CircleCollider2D.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
@@ -97,6 +94,18 @@
     </ClCompile>
     <ClCompile Include="Components\AudioSource.cpp">
       <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Transform.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Json.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\RigidBody.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Object.cpp">
+      <Filter>Source\FrameWork</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +215,15 @@
       <Filter>Source\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Core\Logger.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Factory.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Serializable.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Json.h">
       <Filter>Source\Core</Filter>
     </ClInclude>
   </ItemGroup>

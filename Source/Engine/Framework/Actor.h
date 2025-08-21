@@ -15,22 +15,30 @@ namespace shovel {
 		vec2 velocity{ 0, 0 };
 		float damping{ 0.2f };
 
+		bool persistent{ false };
+
 		bool destroyed{ false };
 		float lifespan{ 0 };
 
 		Transform transform;
-
 		class Scene* scene{ nullptr };
+
 	public:
 		Actor() = default;
 		Actor(const Transform& transform) :
 			transform{transform}
 		{}
+		Actor(const Actor& other);
+
+		CLASS_PROTOTYPE(Actor)
+
+
+		void Read(const json::value_t& value) override;
 
 		virtual void Update(float dt);
 		virtual void Draw(class Renderer& renderer);
 
-		virtual void OnColission(Actor* other) = 0;
+		virtual void OnColission(Actor* other) {};
 
 		// components
 		void AddComponent(std::unique_ptr<Component> component);
@@ -44,6 +52,8 @@ namespace shovel {
 
 	protected:
 		std::vector<std::unique_ptr<Component>> m_components;
+
+		
 	};
 	template<typename T>
 	inline T* Actor::GetComponent()

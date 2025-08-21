@@ -1,8 +1,10 @@
 #include "SpriteRenderer.h"
 #include "Renderer/Renderer.h"
+#include "Core/Json.h"
 
 namespace shovel
 {
+	FACTORY_REGISTER(SpriteRenderer)
 
 
 	void SpriteRenderer::Update(float dt)
@@ -21,5 +23,11 @@ namespace shovel
 				owner->transform.rotation,
 				owner->transform.scale);
 		}
+	}
+	void SpriteRenderer::Read(const json::value_t& value)
+	{
+		Object::Read(value);
+
+		JSON_READ(value, textureName);
 	}
 }

@@ -6,6 +6,7 @@
 
 namespace shovel
 {
+	FACTORY_REGISTER(AudioSource)
 	void AudioSource::Update(float dt)
 	{
 
@@ -18,17 +19,6 @@ namespace shovel
 		{
 			GetEngine().GetAudio().PlaySound(*audioClip);
 		}
-	}
-
-	bool AudioSystem::PlaySound( AudioClip& audioClip) 
-	{
-
-		FMOD_RESULT result = m_aSystem->playSound(audioClip.m_sound, 0, false, nullptr);
-
-		if (!CheckFMODResult(result)) return false;
-
-		return true;
-
 	}
 
 }

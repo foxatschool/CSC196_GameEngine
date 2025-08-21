@@ -1,7 +1,9 @@
 #pragma once
-#include "Framework/Actor.h"
+#include "Framework/Component.h"
 
-class Enemy : public shovel::Actor
+
+
+class Enemy : public shovel::Component
 {
 public:
 	float speed{ 0 };
@@ -9,17 +11,14 @@ public:
 	float fireTime = 3.0f; // Time between shots
 public:
 	Enemy() = default;
-	Enemy(const shovel::Transform transform) :
-		Actor{ transform }
-	{}
-
 	void Update(float dt) override;
+	CLASS_PROTOTYPE(Enemy)
 
 
 
 private:
 
 	// Inherited via Actor
-	void OnColission(Actor* other) override;
+	void OnColission(class shovel::Actor* other) ;
 };
 

@@ -71,25 +71,25 @@ namespace shovel
 		template<typename... Args>
 		static void Info(std::format_string<Args...> fmt, Args&&... args)
 		{
-			Log(LogLevel::INFO, std::format(fmt, std::forward<args>(args)...));
+			Log(LogLevel::INFO, std::format(fmt, std::forward<Args>(args)...));
 		}
 
 		template<typename... Args>
 		static void Error(std::format_string<Args...> fmt, Args&&... args)
 		{
-			Log(LogLevel::ERROR, std::format(fmt, std::forward<args>(args)...));
+			Log(LogLevel::ERROR, std::format(fmt, std::forward<Args>(args)...));
 		}
 
 		template<typename... Args>
 		static void Debug(std::format_string<Args...> fmt, Args&&... args)
 		{
-			Log(LogLevel::DEBUG, std::format(fmt, std::forward<args>(args)...));
+			Log(LogLevel::DEBUG, std::format(fmt, std::forward<Args>(args)...));
 		}
 
 		template<typename... Args>
 		static void Warning(std::format_string<Args...> fmt, Args&&... args)
 		{
-			Log(LogLevel::WARNING, std::format(fmt, std::forward<args>(args)...));
+			Log(LogLevel::WARNING, std::format(fmt, std::forward<Args>(args)...));
 		}
 	private:
 		inline static LogLevel s_enabledLevels = LogLevel::ALL;

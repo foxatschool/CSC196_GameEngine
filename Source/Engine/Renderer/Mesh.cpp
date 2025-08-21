@@ -1,6 +1,6 @@
 #include "Mesh.h"
 #include "Renderer.h"
-#include "Logger.h"
+#include "Core/Logger.h"
 
 namespace shovel
 {

@@ -3,16 +3,23 @@
 #include "Renderer/Mesh.h"
 
 
-void shovel::MeshRenderer::Update(float dt)
+namespace shovel
 {
-	//
-}
 
-void shovel::MeshRenderer::Draw(Renderer& renderer)
-{
-	auto mesh = Resources().Get<Mesh>(meshName);
-	if (mesh)
+
+	FACTORY_REGISTER(MeshRenderer)
+
+		void MeshRenderer::Update(float dt)
 	{
-		mesh->Draw(renderer, owner->transform);
+		//
+	}
+
+	void MeshRenderer::Draw(Renderer& renderer)
+	{
+		auto mesh = Resources().Get<Mesh>(meshName);
+		if (mesh)
+		{
+			mesh->Draw(renderer, owner->transform);
+		}
 	}
 }

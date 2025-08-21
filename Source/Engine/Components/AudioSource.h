@@ -9,10 +9,10 @@ namespace shovel
 		std::string audioClipName; // Name of the audio clip to play
 		
 	public:
-
+		CLASS_PROTOTYPE(AudioSource)
 		// Inherited via Component
 		void Update(float dt) override;
 		void Play();
-		bool PlaySound(class AudioClip& audioClip);
+		
 	};
 }

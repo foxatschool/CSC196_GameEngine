@@ -1,23 +1,26 @@
 #pragma once
-#include "Framework/Actor.h"
+#include "Framework/Component.h"
 #include <iostream>
 
-class Rocket : public shovel::Actor
+
+
+class Rocket : public shovel::Component
 {
 public:
 	float speed = 200;
 
 public:
+	CLASS_PROTOTYPE(Rocket)
 
 	Rocket() = default;
-	Rocket(const shovel::Transform transform) :
+	/*Rocket(const shovel::Transform transform) :
 		Actor{ transform }
-	{}
+	{}*/
 
 	// Inherited via Actor
 	void Update(float dt) override;
 
 	// Inherited via Actor
-	void OnColission(Actor* other) override;
+	void OnColission(class shovel::Actor* other);
 };
 

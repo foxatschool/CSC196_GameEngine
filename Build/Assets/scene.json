@@ -1,0 +1,54 @@
+{
+    "prototypes": [
+        {
+            "name": "player",
+            "tag": "player",
+            "transform": {
+                "position": [
+                    400,
+                    300
+                ],
+                "rotation": 0,
+                "scale": 2
+            }
+        }
+    ],
+    "actors": [
+        {
+            "name": "sprite",
+            "tag": "background",
+            "transform": {
+                "position": [
+                    400,
+                    300
+                ],
+                "rotation": 30,
+                "scale": 2,
+                "persistant": 
+            },
+            "components": [
+                {
+                    "type": "Player",
+                    "speed": 1500.0,
+                    "rotationrate": 180.0
+                },
+                {
+                    "type": "SpriteRenderer",
+                    "texture_name": "blue_01.png"
+                },
+                {
+                    "type": "RigidBody",
+                    "damping": 1.5,
+                    "velocity": [
+                        300,
+                        0
+                    ]
+                },
+                {
+                    "type": "CircleCollider2D",
+                    "radius": 60
+                }
+            ]
+        }
+    ]
+}

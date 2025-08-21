@@ -1,9 +1,11 @@
 #pragma once
 #include "Vector2.h"
+#include "Core/Serializable.h"
 
 namespace shovel
 {
-	struct Transform
+
+	struct Transform : public Serializable
 	{
 		vec2 position{0,0};
 		float rotation = 0;
@@ -15,5 +17,7 @@ namespace shovel
 			rotation{ rotation },
 			scale{ scale } 
 		{}
+
+		void Read(const json::value_t& value) override;
 	};
 }

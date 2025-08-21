@@ -1,4 +1,5 @@
 #include "SpaceGame.h"
+#include "../Game/GamePCH.h"
 
 #include "Framework/Scene.h"
 #include "Math/Vector2.h"
@@ -13,12 +14,18 @@
 #include "Framework/Scene.h"
 #include "../GameData.h"
 #include "Resources/ResourceManager.h"
+#include "Core/Json.h"
 
 
 
 bool SpaceGame::Initialize()
 {
 	m_scene = std::make_unique<shovel::Scene>(this);
+
+
+    shovel::json::document_t document;
+	shovel::json::Load("scene.json", document);
+	m_scene->Read(document);
 
 	//m_titleFont = std::make_shared<shovel::Font>();
 	//m_titleFont->Load("Eight-Bit Madness.ttf", 128);
@@ -69,29 +76,12 @@ void SpaceGame::Update(float dt)
     case SpaceGame::GameState::StartRound:
     {
         m_scene->RemoveAllActors();
-        //Create player.
-        std::shared_ptr<shovel::Mesh> playerModel = std::make_shared<shovel::Mesh>(GameData::ShipPoint, shovel::vec3{ 0,1,0 });
-        shovel::Transform transform{ shovel::vec2{shovel::GetEngine().GetRenderer().GetWidth() * 0.5f, shovel::GetEngine().GetRenderer().GetHeight() * 0.5f}, 0, 8 };
-        auto player = std::make_unique<Player>(transform);
-        player->speed = 500.0f;
-        player->name = "Player";
-        player->tag = "Player";
 
-        auto spriteRenderer = std::make_unique<shovel::SpriteRenderer>();
-        spriteRenderer->textureName = "Rocket"; // todo "put texture location here"
-        player->AddComponent(spriteRenderer);
+        auto player = shovel::Factory::Instance().Create<shovel::Actor>("player");
+		m_scene->AddActor(std::move(player));
 
-
-		auto rb = std::make_unique<shovel::RigidBody>();
-		rb->damping = 1.5f;
-		player->AddComponent(std::move(rb));
-
-        auto collider = std::make_unique<shovel::CircleCollider2D>();
-		collider->radius = 60;
-		player->AddComponent(std::move(collider));
-
-        m_scene->AddActor(std::move(player));
-        m_gameState = SpaceGame::GameState::Game;
+        m_gameState = GameState::Game;
+ 
 
     }
         break;
@@ -130,6 +120,8 @@ void SpaceGame::Update(float dt)
 
 void SpaceGame::Draw(shovel::Renderer& renderer)
 {
+    m_scene->Draw(renderer);
+
     if (m_gameState == SpaceGame::GameState::Title)
     {
         m_titleText->Create(renderer, "SPACE CADETS", shovel::vec3(1, 1, 0));
@@ -147,57 +139,27 @@ void SpaceGame::Draw(shovel::Renderer& renderer)
     {
 	    for (int i = 0; i < (m_scene->GetActorByName<Player>("Player"))->bulletCount; i++)
 	    {
-           /* m_bulletText->Create(renderer, "I", shovel::vec3(1, 1, 1));
-            m_bulletText->Draw(renderer, (10 + ((i + 10) * 50)), 10);*/
-
             m_bulletModel->Draw(renderer, { (10.0f + ((i + 10.0f) * 50.0f)), 30.0f }, 270, 10);
 	    }
     }
 	m_livesText->Create(renderer, "LIVES: " + std::to_string(m_lives), { 1,1,1 });
 	m_livesText->Draw(renderer, (float)renderer.GetWidth() - 300, (float)30);
 
-    m_scene->Draw(renderer);
 
 	shovel::GetEngine().GetPS().Draw(renderer);
 }
 void SpaceGame::SpawnEnemy()
 {
-    Player* player = m_scene->GetActorByName<Player>("Player");
+	shovel::Actor* player = m_scene->GetActorByName<shovel::Actor>("player");
     if (player)
     {
-        std::shared_ptr<shovel::Mesh> enemyModel = std::make_shared<shovel::Mesh>(GameData::ShipPoint, shovel::vec3{ 1,1,1 });
-
         //spawn enemy at a random position around the player
         shovel::vec2 position = player->transform.position + shovel::random::onUnitCircle() * shovel::random::getReal(200.0f, 500.0f);
-        shovel::Transform transform{ position, shovel::random::getReal<float>(0.0f, 360.0f), 8 };
+        shovel::Transform transform{ position, shovel::random::getReal<float>(0.0f, 360.0f), 2 };
 
-        // Create a new enemy actor
-        std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform);
-        enemy->velocity = shovel::vec2{ shovel::random::getReal() * 100 - 50, shovel::random::getReal() * 100 - 50 };
-        enemy->fireTimer = 100000000.0f; // Time between shots
-        enemy->name = "Enemy";
-        enemy->tag = "Enemy";
-        enemy->speed = 0;
-
-        //auto spriteRenderer = std::make_unique<shovel::SpriteRenderer>();
-        //spriteRenderer->textureName = "Rocket"; // todo "put texture location here"
-        //enemy->AddComponent(spriteRenderer);
-        auto meshRenderer = std::make_unique<shovel::MeshRenderer>();
-		meshRenderer->meshName = "Ship";
-		enemy->AddComponent(std::move(meshRenderer));
-
-        auto rb = std::make_unique<shovel::RigidBody>();
-        rb->damping = 1.5f;
-        enemy->AddComponent(std::move(rb));
-
-        auto collider = std::make_unique<shovel::CircleCollider2D>();
-        collider->radius = 60;
-        enemy->AddComponent(std::move(collider));
-
+        auto enemy = shovel::Instantiate("enemy", transform);
         m_scene->AddActor(std::move(enemy));
     }
-
-
 }
 void SpaceGame::ShutDown()
 {

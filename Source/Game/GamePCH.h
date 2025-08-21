@@ -23,4 +23,7 @@
 #include "Renderer/Text.h"
 #include "Renderer/Texture.h"
 
+//core
+#include "Core/Logger.h"
+
 

@@ -1,7 +1,8 @@
 #pragma once
-#include "Framework/Actor.h"
+#include "Framework/Component.h"
+#include "Core/Json.h"
 
-class Player : public shovel::Actor
+class Player : public shovel::Component
 {
 public:
 	float speed = 200;
@@ -12,20 +13,17 @@ public:
 
 public:
 	Player() = default;
-	Player(const shovel::Transform& transform) :
-		Actor{ transform}
-	{}
+	CLASS_PROTOTYPE(Player)
 
 	void Shoot();
 
 
 	void Update(float dt) override;
-
+	void Read(const shovel::json::value_t& value) override;
 private:
 
 	// Inherited via Actor
-	void OnColission(Actor* other) override;
+	void OnColission(class shovel::Actor* other);
 	bool reloded = true;
 	float ReloadTimer = 5.0f;
-	void reload();
 };
