@@ -15,23 +15,22 @@
 #include "../GameData.h"
 #include "Resources/ResourceManager.h"
 #include "Core/Json.h"
+#include "Event/Observer.h"
 
 
 
 bool SpaceGame::Initialize()
 {
+
+    OBSERVER_ADD("player_dead");
+    OBSERVER_ADD("add_points");
+
+
+    shovel::EventManager::Instance().AddObserver("player_dead", *this);
+    shovel::EventManager::Instance().AddObserver("add_points", *this);
+
 	m_scene = std::make_unique<shovel::Scene>(this);
-
-
-    shovel::json::document_t document;
-	shovel::json::Load("scene.json", document);
-	m_scene->Read(document);
-
-	//m_titleFont = std::make_shared<shovel::Font>();
-	//m_titleFont->Load("Eight-Bit Madness.ttf", 128);
-
-	//m_uiFont = std::make_shared<shovel::Font>();
-	//m_uiFont->Load("Eight-Bit Madness.ttf", 48);
+	m_scene->Load("scene.json");
 
 	m_titleText = std::make_unique<shovel::Text>(shovel::Resources().GetWithID<shovel::Font>("title_font", "Eight-Bit Madness.ttf", 128.0f));
 	m_scoreText = std::make_unique<shovel::Text>(shovel::Resources().GetWithID<shovel::Font>("ui_font", "Eight-Bit Madness.ttf", 48.0f));
@@ -81,8 +80,6 @@ void SpaceGame::Update(float dt)
 		m_scene->AddActor(std::move(player));
 
         m_gameState = GameState::Game;
- 
-
     }
         break;
     case SpaceGame::GameState::PlayerDead:
@@ -155,14 +152,27 @@ void SpaceGame::SpawnEnemy()
     {
         //spawn enemy at a random position around the player
         shovel::vec2 position = player->transform.position + shovel::random::onUnitCircle() * shovel::random::getReal(200.0f, 500.0f);
-        shovel::Transform transform{ position, shovel::random::getReal<float>(0.0f, 360.0f), 2 };
+        shovel::Transform transform{ position, shovel::random::getReal<float>(0.0f, 360.0f), 0.2f };
 
         auto enemy = shovel::Instantiate("enemy", transform);
         m_scene->AddActor(std::move(enemy));
     }
 }
+
 void SpaceGame::ShutDown()
 {
+}
+
+void SpaceGame::OnNotify(const shovel::Event& event)
+{
+    if (shovel::equalsIgnoreCase(event.id, "player_dead"))
+    {
+        OnPlayerDeath();
+    }
+    else if (shovel::equalsIgnoreCase(event.id, "add_points"))
+    {
+        AddPoints(std::get<int>(event.data));
+    }
 }
 
 void SpaceGame::OnPlayerDeath()

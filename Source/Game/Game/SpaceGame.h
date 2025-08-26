@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "Enemy.h"
 
-class SpaceGame : public shovel::Game
+class SpaceGame : public shovel::Game, public shovel::IObserver
 {
 public:
 	enum class GameState 
@@ -24,6 +24,8 @@ public:
 	};
 public:
 	SpaceGame() = default;
+
+	void OnNotify(const shovel::Event& event) override;
 
 	// Inherited via Game
 	bool Initialize() override;

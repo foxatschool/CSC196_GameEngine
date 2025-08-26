@@ -28,7 +28,7 @@ namespace shovel
 		SDL_DestroySurface(surface);
 
 
-		if (m_texture)
+		if (!m_texture)
 		{
 			std::cerr << "Could not create texture: " << filename << std::endl;
 			return false;

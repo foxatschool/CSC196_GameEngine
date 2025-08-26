@@ -39,7 +39,7 @@ void Rocket::Update(float dt)
 //	Actor::Update(dt);
 }
 
-void Rocket::OnColission(shovel::Actor* other)
+void Rocket::OnCollision(shovel::Actor* other)
 {
 	if (owner->tag != other->tag)
 	{

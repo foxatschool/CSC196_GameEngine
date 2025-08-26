@@ -7,7 +7,7 @@
 
 namespace shovel
 {
-	class Object : public Serializable
+	class Object : public ISerializable
 	{
 	public:
 		std::string name;

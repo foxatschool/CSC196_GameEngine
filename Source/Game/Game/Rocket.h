@@ -4,7 +4,7 @@
 
 
 
-class Rocket : public shovel::Component
+class Rocket : public shovel::Component, public shovel::ICollidable
 {
 public:
 	float speed = 200;
@@ -21,6 +21,6 @@ public:
 	void Update(float dt) override;
 
 	// Inherited via Actor
-	void OnColission(class shovel::Actor* other);
+	void OnCollision(class shovel::Actor* other) override;
 };
 

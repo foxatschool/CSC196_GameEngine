@@ -21,6 +21,14 @@
 #include "Math/Transform.h"
 #include "Math/math.h"
 
+//physics
+#include "Physics/Collidable.h"
+
+//Event manager
+#include "Event/Event.h"
+#include "Event/EventManager.h"
+#include "Event/Observer.h"
+
 // resources
 #include "Resources/Resource.h"
 #include "Resources/ResourceManager.h"

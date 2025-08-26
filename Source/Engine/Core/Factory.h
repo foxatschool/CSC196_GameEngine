@@ -29,6 +29,7 @@ namespace shovel
 		virtual std::unique_ptr<Object> Create() = 0;
 	};
 
+
 	template <typename T>
 	requires std::derived_from<T, Object>
 	class Creator : public CreatorBase
@@ -61,13 +62,14 @@ namespace shovel
 	class Factory : public Singleton<Factory>
 	{
 	public:
+		void RemoveAll() { m_registry.clear(); }
 		template<typename T>
 		requires std::derived_from<T, Object>
-		void Register(const std::string name);
+		void Register(const std::string& name);
 
 		template<typename T>
 		requires std::derived_from<T, Object>
-		void RegisterPrototype(const std::string name, std::unique_ptr<T> prototype);
+		void RegisterPrototype(const std::string& name, std::unique_ptr<T> prototype);
 
 
 		template<typename T = Object>
@@ -83,24 +85,24 @@ namespace shovel
 
 	template<typename T>
 	requires std::derived_from<T, Object>
-	inline void Factory::Register(const std::string name)
+	inline void Factory::Register(const std::string& name)
 	{
 		std::string key = toLower(name);
 		m_registry[key] = std::make_unique<Creator<T>>();
 
-		Logger::Info("Added to factory: ", name);
+		Logger::Info("Added to factory: {}", name);
 	}
 
 	template<typename T>
 	requires std::derived_from<T, Object>
-	inline void Factory::RegisterPrototype(const std::string name, std::unique_ptr<T> prototype)
+	inline void Factory::RegisterPrototype(const std::string& name, std::unique_ptr<T> prototype)
 	{
 		// make case-insensitive (lowercase)
 		std::string key = toLower(name);
 		// add prototype creator to registry
 		m_registry[key] = std::make_unique<PrototypeCreator<T>>(std::move(prototype));
 
-		Logger::Info("Added prototype to factory: ", name);
+		Logger::Info("Added prototype to factory: {}", name);
 	}
 
 
@@ -108,7 +110,7 @@ namespace shovel
 		requires std::derived_from<T, Object>
 	inline std::unique_ptr<T> Factory::Create(const std::string& name)
 	{
-		// make case-insensitive (lowercase_
+		// make case-insensitive lowercase_
 		std::string key = toLower(name);
 		// look for crator in registry
 		auto it = m_registry.find(key);
@@ -134,14 +136,14 @@ namespace shovel
 
 	template<typename T = Actor>
 		requires std::derived_from<T, Actor>
-	std::unique_ptr<T> Instantiate(const std::string& name)
+	std::unique_ptr<T> Instantiate(const std::string name)
 	{
 		return Factory::Instance().Create<T>(name);
 	}
 
 	template<typename T = Actor>
 		requires std::derived_from<T, Actor>
-	std::unique_ptr<T> Instantiate(const std::string& name, const vec2 position, float rotation, float scale)
+	std::unique_ptr<T> Instantiate(const std::string name, const vec2 position, float rotation, float scale)
 	{
 		auto instance = Factory::Instance().Create<T>(name);
 		instance->transform = Transform{position, rotation, scale};
@@ -152,7 +154,7 @@ namespace shovel
 
 	template<typename T = Actor>
 		requires std::derived_from<T, Actor>
-	std::unique_ptr<T> Instantiate(const std::string& name, const Transform& transform)
+	std::unique_ptr<T> Instantiate(const std::string name, const Transform& transform)
 	{
 		auto instance = Factory::Instance().Create<T>(name);
 		instance->transform = transform;

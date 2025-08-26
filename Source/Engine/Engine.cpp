@@ -39,6 +39,8 @@ namespace shovel
 	{
 		//Release resouces from resource manager
 		Resources().Clear();
+		Factory::Instance().RemoveAll();
+		EventManager::Instance().RemoveAll();
 
 		// Shut down engine systems
 		m_particleSystem->ShutDown();

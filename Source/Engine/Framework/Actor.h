@@ -2,6 +2,7 @@
 #include "../Math/Transform.h"
 #include "Object.h"
 #include "Component.h"
+#include "Renderer/Texture.h"
 
 #include <vector>
 #include <string>
@@ -12,8 +13,8 @@ namespace shovel {
 	public:
 		std::string tag;
 
-		vec2 velocity{ 0, 0 };
-		float damping{ 0.2f };
+		//vec2 velocity{ 0, 0 };
+		//float damping{ 0.2f };
 
 		bool persistent{ false };
 
@@ -35,10 +36,13 @@ namespace shovel {
 
 		void Read(const json::value_t& value) override;
 
+		virtual void Start();
+		virtual void Destroyed();
+
 		virtual void Update(float dt);
 		virtual void Draw(class Renderer& renderer);
 
-		virtual void OnColission(Actor* other) {};
+		virtual void OnCollision(Actor* other);
 
 		// components
 		void AddComponent(std::unique_ptr<Component> component);

@@ -5,7 +5,26 @@
 #include "../Components/ColliderComponent.h"
 
 namespace shovel {
-	
+	bool Scene::Load(const std::string& sceneName)
+	{
+		shovel::json::document_t document;
+		if (!shovel::json::Load(sceneName, document))
+		{
+			Logger::Error("Failed to load scene: {}", sceneName);
+			return false;
+		}
+		// create scene
+		Read(document);
+
+		// start actors
+		for (auto& actor : m_actors)
+		{
+			actor->Start();
+		}
+		return true;
+	}
+
+
 	// Update all actors in the scene
 	void Scene::Update(float dt) {
 		for (auto& actor : m_actors) 
@@ -17,17 +36,23 @@ namespace shovel {
 		}
 
 		// Remove actors that are marked as destroyed
-		for (auto iter = m_actors.begin(); iter != m_actors.end();)
+
+		std::erase_if(m_actors, [](auto& actor)
 		{
-			if ((*iter)->destroyed)
-			{
-				iter = m_actors.erase(iter); // Remove the actor if it is marked as destroyed
-			}
-			else
-			{
-				++iter; // Move to the next actor
-			}
-		}
+				return (actor->destroyed);
+		});
+
+		//for (auto iter = m_actors.begin(); iter != m_actors.end();)
+		//{
+		//	if ((*iter)->destroyed)
+		//	{
+		//		iter = m_actors.erase(iter); // Remove the actor if it is marked as destroyed
+		//	}
+		//	else
+		//	{
+		//		++iter; // Move to the next actor
+		//	}
+		//}
 
 		for (auto& actorA : m_actors)
 		{
@@ -43,8 +68,8 @@ namespace shovel {
 				//Make sure both actors have colliders
 				if (colliderA->CheckCollision(*colliderB))
 				{
-					actorA->OnColission(actorB.get());
-					actorB->OnColission(actorA.get());
+					actorA->OnCollision(actorB.get());
+					actorB->OnCollision(actorA.get());
 				}
 			}
 		}
@@ -63,9 +88,10 @@ namespace shovel {
 	}
 
 	// Add an actor to the scene
-	void Scene::AddActor(std::unique_ptr<class Actor> actor) 
+	void Scene::AddActor(std::unique_ptr<class Actor> actor, bool start)
 	{
 		actor->scene = this;
+		if (start) actor->Start();
 		m_actors.push_back(std::move(actor));
 	}
 

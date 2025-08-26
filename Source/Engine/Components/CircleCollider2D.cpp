@@ -2,6 +2,13 @@
 
 namespace shovel
 {
+
+	FACTORY_REGISTER(CircleCollider2D)
+
+	void CircleCollider2D::Update(float dt) 
+	{
+		//
+	}
 	bool CircleCollider2D::CheckCollision(ColliderComponent& other)
 	{
 		float distance = (owner->transform.position - other.owner->transform.position).Length();

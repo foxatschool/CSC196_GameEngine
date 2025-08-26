@@ -8,14 +8,15 @@
 
 namespace shovel {
 	class Game;
-	class Scene : public Serializable {
+	class Scene : public ISerializable {
 	public:
 		Scene(Game* game) : m_game{ game } {};
 
+		bool Load(const std::string& sceneName);
 		void Update(float dt);
 		void Draw(class Renderer& renderer);
 
-		void AddActor(std::unique_ptr < class Actor >);
+		void AddActor(std::unique_ptr < class Actor >, bool start = true);
 		void RemoveAllActors(bool force = false);
 
 		template<typename T = Actor>
@@ -63,7 +64,7 @@ namespace shovel {
 		{
 			if (shovel::toLower(actor->tag) == shovel::toLower(tag))
 			{
-				T* object = dynamic_cast<T*>(actor);
+				T* object = dynamic_cast<T*>(actor.get()) ;
 				if (object)
 				{
 					results.push_back(object);

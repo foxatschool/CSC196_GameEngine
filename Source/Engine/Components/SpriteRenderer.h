@@ -7,8 +7,12 @@ namespace shovel
 	{
 	public:
 		std::string textureName;
+		res_t<Texture> texture;
 	public:
 		CLASS_PROTOTYPE(SpriteRenderer)
+
+		void Start() override;
+
 		void Update(float dt);
 		// Inherited via RendererComponent
 		void Draw(Renderer& renderer);

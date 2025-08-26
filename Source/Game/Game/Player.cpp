@@ -62,24 +62,15 @@ void Player::Shoot()
 	}
 }
 
-void Player::Read(const shovel::json::value_t& value)
-{
-	Object::Read(value);
-
-	JSON_READ(value, speed);
-	JSON_READ(value, rotationRate);
-
-}
-
 
 
 void Player::Update(float dt)
 {
 	shovel::Particle particle;
 	particle.position = owner->transform.position + shovel::vec2{ -50, 0 }.Rotate(shovel::math::degTorad(owner->transform.rotation));
-	particle.velocity = shovel::vec2(shovel::random::getReal()  * -50, shovel::random::getReal() * 10);// change to random
+	particle.velocity = shovel::vec2(shovel::random::getReal()  * -50, shovel::random::getReal() * 100);// change to random
 	particle.color = shovel::vec3(1, 1, 1);// change to random
-	particle.lifetime = 2;
+	particle.lifetime = .5;
 	shovel::GetEngine().GetPS().AddParticle(particle);
 
 	// Update the transform rotation based on input
@@ -100,7 +91,7 @@ void Player::Update(float dt)
     
 	// Apply the force to the player's velocity using the delta time
     //velocity += force * dt;
-	auto rb = owner->GetComponent<shovel::RigidBody>();
+	auto* rb = owner->GetComponent<shovel::RigidBody>();
 	if (rb)
 	{
 		rb->velocity += force * dt;
@@ -108,7 +99,6 @@ void Player::Update(float dt)
 
 	owner->transform.position.x = shovel::math::wrap(owner->transform.position.x, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
 	owner->transform.position.y = shovel::math::wrap(owner->transform.position.y, 0.0f, (float)shovel::GetEngine().GetRenderer().GetHeight());
-
 //	if (bulletCount <= 0)
 //	{
 //		reloded = true;
@@ -134,11 +124,25 @@ void Player::Update(float dt)
 //	Actor::Update(dt);
 }
 
-void Player::OnColission(shovel::Actor* other)
+void Player::OnCollision(shovel::Actor* other)
 {
+
+
 	if (owner->tag != other->tag)
 	{
 		owner->destroyed = true;
+		EVENT_NOTIFY(player_dead);
+
+		shovel::EventManager::Instance().Notify(shovel::Event("player_dead", true));
 		dynamic_cast<SpaceGame*>(owner->scene->GetGame())->OnPlayerDeath();
 	}
+}
+
+void Player::Read(const shovel::json::value_t& value)
+{
+	Object::Read(value);
+
+	JSON_READ(value, speed);
+	JSON_READ(value, rotationRate);
+	JSON_READ(value, fireTime);
 }

@@ -1,11 +1,17 @@
 #include "SpriteRenderer.h"
 #include "Renderer/Renderer.h"
 #include "Core/Json.h"
+#include "Engine.h"
 
 namespace shovel
 {
 	FACTORY_REGISTER(SpriteRenderer)
 
+
+	void SpriteRenderer::Start()
+	{
+		texture = Resources().Get<Texture>(textureName, GetEngine().GetRenderer());
+	}
 
 	void SpriteRenderer::Update(float dt)
 	{
@@ -14,8 +20,6 @@ namespace shovel
 
 	void SpriteRenderer::Draw(Renderer& renderer)
 	{
-		auto texture = Resources().Get<Texture>(textureName, renderer).get();
-
 		if (texture)
 		{
 			renderer.DrawTexture(*texture,

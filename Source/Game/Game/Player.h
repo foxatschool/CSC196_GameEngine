@@ -1,8 +1,8 @@
 #pragma once
 #include "Framework/Component.h"
-#include "Core/Json.h"
+//#include "Core/Json.h"
 
-class Player : public shovel::Component
+class Player : public shovel::Component, public shovel::ICollidable
 {
 public:
 	float speed = 200;
@@ -22,8 +22,7 @@ public:
 	void Read(const shovel::json::value_t& value) override;
 private:
 
-	// Inherited via Actor
-	void OnColission(class shovel::Actor* other);
+	void OnCollision(class shovel::Actor* other) override;
 	bool reloded = true;
 	float ReloadTimer = 5.0f;
-};
+}; 

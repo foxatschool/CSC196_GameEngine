@@ -1,21 +1,95 @@
 {
+    "prototypes": [
+        {
+            "name": "player",
+            "tag": "player",
+            "transform": {
+                "position": [
+                    640,
+                    512
+                ],
+                "rotation": 270,
+                "scale": 0.2
+            },
+            "components": [
+                {
+                    "type": "Player",
+                    "speed": 500,
+                    "rotationRate": 150.0,
+                    "fireTimer": 0.2
+                },
+                {
+                    "type": "SpriteRenderer",
+                    "texture_name": "textures/Red_01.png"
+                },
+                {
+                    "type": "Rigidbody",
+                    "damping": 1.0,
+                    "velovity": [
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "type": "CircleCollider2D",
+                    "radius": 60.0
+                }
+            ]
+        },
+        {
+            "name": "enemy",
+            "tag": "enemy",
+            "transform": {
+                "position": [
+                    640,
+                    512
+                ],
+                "rotation": 0,
+                "scale": 0.2
+            },
+            "components": [
+                {
+                    "type": "Enemy",
+                    "speed": 400.0,
+                    "rotationRate": 100.0,
+                    "fireTimer": 0.2
+                },
+                {
+                    "type": "SpriteRenderer",
+                    "texture_name": "textures/Grey_01.png"
+                },
+                {
+                    "type": "Rigidbody",
+                    "damping": 1.0,
+                    "velovity": [
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "type": "CircleCollider2D",
+                    "radius": 60.0
+                }
+            ]
+        }
+    ],
     "actors": [
         {
             "name": "sprite",
             "tag": "background",
-            "persistant": true,
+            "persistent": true,
             "transform": {
                 "position": [
-                    400,
-                    300
+                    640,
+                    512
                 ],
-                "rotation": 30,
-                "scale": 2
+                "rotation": 0,
+                "scale": 1
             },
             "components": [
                 {
                     "type": "SpriteRenderer",
-                    "texture_name": "blue_01.png"
+                    "texture_name": "textures/space-background.jpg"
                 }
             ]
         }

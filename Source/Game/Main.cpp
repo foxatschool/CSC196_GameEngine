@@ -39,10 +39,11 @@ int main(int argc, char* argv[]) {
     A a3;
 	a3 = a1; // assignment operator
 	std::cout << a3.size << std::endl;
-    return 0;
 
     shovel::file::SetCurrentDirectory("Assets");
     
+    shovel::file::Exists("scene.json");
+
     // command line arguments
     std::cout << argc << std::endl;
 	for (int i = 0; i < argc; ++i) 
@@ -87,8 +88,6 @@ int main(int argc, char* argv[]) {
 
     std::cout << v2 << std::endl;
 
-    return 0;
-
 	// Initialize Evrything
 	shovel::GetEngine().Initialize();
     shovel::Logger::Info("Initalizing Engine .  .   .");
@@ -98,12 +97,6 @@ int main(int argc, char* argv[]) {
     //texture->Load(...texture filename..., renderer);
     
 	//auto texture = shovel::Resources().Get<shovel::Texture>("texture.png", shovel::GetEngine().GetRenderer());
-
-	//font = new shovel::Font();
-    //font->Load("Eight-Bit Madness.ttf", 20);
-
-    //shovel::Text* text = new shovel::Text(font);
-    //text->Create(shovel::GetEngine().GetRenderer(), "Hello World", shovel::vec3{1.0f, 1.0f, 1.0f});
 
 
     // Iinitalize Game
