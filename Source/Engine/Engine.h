@@ -25,6 +25,10 @@ namespace shovel
 		ParticleSystem& GetPS() { return *m_particleSystem; }
 
 		Time& GetTime() { return m_time; }
+
+		Physics& GetPhysics() { return *m_physics; }
+
+		std::unique_ptr<Physics> m_physics;
 	private:
 		friend class Singleton<Engine>;
 		Engine() = default;
@@ -37,6 +41,7 @@ namespace shovel
 		std::unique_ptr<InputSystem> m_input;
 		std::unique_ptr<ParticleSystem> m_particleSystem;
 	};
+
 
 	inline Engine& GetEngine() { return Engine::Instance(); }
 }

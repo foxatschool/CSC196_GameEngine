@@ -17,7 +17,7 @@ bool shovel::Font::Load(const std::string& name, float fontSize)
 	// Check if the font was loaded successfully
 	if (m_ttfFont == nullptr) 
 	{
-		std::cerr << "Could not load font: " << name << std::endl;
+		Logger::Error("Could not load font: {}", name);
 		return false;
 	}
 

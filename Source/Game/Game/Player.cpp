@@ -27,34 +27,10 @@ void Player::Shoot()
  	reloded = bulletCount <= 0;
 	if (!reloded)
 	{
-		//bulletCount--;
-		//std::shared_ptr<shovel::Mesh> bulletModel = std::make_shared<shovel::Mesh>(GameData::BulletPoints, shovel::vec3{ 1.0,1.0,1.0 });
-		//shovel::Transform transform{ this->owner->transform.position, this->owner->transform.rotation, 2.5 };
-		//auto rocket = std::make_unique<Rocket>(transform);
-		//rocket->speed = 500.0f;
-		//rocket->owner->lifespan = 1.5f;
-		//rocket->name = "Rocket";
-		//rocket->owner->tag = "Player";
-		//
-		//auto spriteRenderer = std::make_unique<shovel::SpriteRenderer>();
-		//spriteRenderer->textureName = "Rocket"; // todo "put texture location here"
-		//rocket->owner->AddComponent(std::move(spriteRenderer));
-		//
-		//auto rb = std::make_unique<shovel::RigidBody>();
-		//rocket->owner->AddComponent(std::move(rb));
-		//
-		//auto collider = std::make_unique<shovel::CircleCollider2D>();
-		//collider->radius = 60;
-		//rocket->owner->AddComponent(std::move(collider));
-		//
-		//auto sound = shovel::Resources().Get<shovel::AudioClip>("bass.wav", shovel::GetEngine().GetAudio()).get();
-		//if (!sound)
-			//{
-			//	shovel::GetEngine().GetAudio().PlaySound(*sound);
-			//}
-	
-		//owner->scene->AddActor(std::move(rocket));
-		
+		bulletCount--;
+
+		auto rocket = shovel::Instantiate("rocket", owner->transform);
+		owner->scene->AddActor(std::move(rocket));
 	}
 	else
 	{
@@ -63,6 +39,12 @@ void Player::Shoot()
 }
 
 
+
+void Player::Start()
+{
+	m_rigidBody = owner->GetComponent<shovel::RigidBody>();
+	fireTimer = fireTime;
+}
 
 void Player::Update(float dt)
 {
@@ -78,7 +60,7 @@ void Player::Update(float dt)
     if (shovel::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -1;
     if (shovel::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = +1;
 
-    owner->transform.rotation += (rotate * rotationRate) * dt;
+    m_rigidBody->ApplyTorque(rotate * rotationRate);
 
 	// Update the transform position based on input and speed
 	float thrust = 0;
@@ -90,38 +72,35 @@ void Player::Update(float dt)
     shovel::vec2 force = direction.Rotate(shovel::math::degTorad(owner->transform.rotation)) * thrust * speed;
     
 	// Apply the force to the player's velocity using the delta time
-    //velocity += force * dt;
 	auto* rb = owner->GetComponent<shovel::RigidBody>();
 	if (rb)
 	{
-		rb->velocity += force * dt;
+		rb->ApplyForce(force);
 	}
 
 	owner->transform.position.x = shovel::math::wrap(owner->transform.position.x, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
 	owner->transform.position.y = shovel::math::wrap(owner->transform.position.y, 0.0f, (float)shovel::GetEngine().GetRenderer().GetHeight());
-//	if (bulletCount <= 0)
-//	{
-//		reloded = true;
-//		ReloadTimer -= dt;
-//		if (ReloadTimer <= 0.0f)
-//		{
-//			bulletCount = 5;
-//			ReloadTimer = 5.0f;
-//			reloded = false;
-//		}
-//	}
-//
-//	fireTimer -= dt;
-//	if (shovel::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE) && fireTimer <=0 )
-//	{
-//		
-//		Shoot();
-//		fireTimer = fireTime;
-//	}
-//	// Call the base class update method
-//
-//
-//	Actor::Update(dt);
+
+
+	if (bulletCount <= 0)
+	{
+		reloded = true;
+		ReloadTimer -= dt;
+		if (ReloadTimer <= 0.0f)
+		{
+			bulletCount = 5;
+			ReloadTimer = 5.0f;
+			reloded = false;
+		}
+	}
+
+	fireTimer -= dt;
+	if (shovel::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE) && fireTimer <=0 )
+	{
+		
+		Shoot();
+		fireTimer = fireTime;
+	}
 }
 
 void Player::OnCollision(shovel::Actor* other)

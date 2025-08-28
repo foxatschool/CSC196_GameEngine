@@ -8,7 +8,7 @@ public:
 	float fireTimer = 0;
 	float fireTime = 3.0f; // Time between shots
 
-	shovel::RigidBody* m_rigidBody;
+	shovel::RigidBody* m_rigidBody{ nullptr };
 
 public:
 	Enemy() = default;

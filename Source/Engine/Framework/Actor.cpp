@@ -32,7 +32,7 @@ namespace shovel {
 	{
 		for (auto& component : m_components)
 		{
-			component->Start();
+			component->Destroyed();
 		}
 	}
 

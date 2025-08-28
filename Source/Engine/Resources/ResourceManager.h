@@ -53,7 +53,7 @@ namespace shovel
 
 			if (!resource)
 			{
-				std::cerr << "Resource type mismach" << key << std::endl;
+				Logger::Error("Resource type mismach: {}", name);
 				return res_t<T>();
 			}
 			return resource;
@@ -62,7 +62,7 @@ namespace shovel
 		res_t<T> resource = std::make_shared<T>();
 		if (!(resource->Load(name, std::forward<Args>(args)...)))
 		{
-			std::cerr << "Failed to load resource: " << name << std::endl;
+			Logger::Error("Failed to load resource: {}", name);
 			return res_t<T>();
 		}
 		m_resources[key] = resource;

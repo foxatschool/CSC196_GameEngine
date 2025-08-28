@@ -58,6 +58,8 @@ namespace shovel {
 		{
 			for (auto& actorB : m_actors)
 			{
+				continue;
+
 				if (actorA == actorB || (actorA->destroyed || actorB->destroyed)) continue;
 
 				auto colliderA = actorA->GetComponent<ColliderComponent>();

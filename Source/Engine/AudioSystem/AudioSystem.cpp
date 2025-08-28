@@ -12,7 +12,7 @@ namespace shovel
 		// Check if the result is not OK
 		if (result != FMOD_OK)
 		{
-			std::cerr << FMOD_ErrorString(result) << std::endl;
+			Logger::Error("FmodResult Error");
 			return false;
 		}
 
@@ -47,7 +47,7 @@ namespace shovel
 		// check if dey exists in sounds map
 		if (m_sounds.find(key) != m_sounds.end())
 		{
-			std::cerr << "Audio System : Name Alerady exists " << key << std::endl;
+			Logger::Error("Audio Sysetem : name Alerady exists {}", key);
 			return false;
 		}
 		
@@ -72,7 +72,7 @@ namespace shovel
 
 		if (m_sounds.find(name) == m_sounds.end())
 		{
-			std::cerr << "Audio System : Name doesn't exist " << key << std::endl;
+			Logger::Error("Audio System : Name doesn't exist: {}", key);
 			return false;
 		}
 		

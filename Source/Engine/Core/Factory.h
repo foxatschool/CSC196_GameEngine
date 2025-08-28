@@ -81,6 +81,7 @@ namespace shovel
 
 	private:
 		std::map<std::string, std::unique_ptr<CreatorBase>> m_registry;
+
 	};
 
 	template<typename T>

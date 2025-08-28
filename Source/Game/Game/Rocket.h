@@ -9,13 +9,12 @@ class Rocket : public shovel::Component, public shovel::ICollidable
 public:
 	float speed = 200;
 
+	shovel::RigidBody* m_rigidbody{ nullptr };
+
 public:
 	CLASS_PROTOTYPE(Rocket)
 
 	Rocket() = default;
-	/*Rocket(const shovel::Transform transform) :
-		Actor{ transform }
-	{}*/
 
 	// Inherited via Actor
 	void Update(float dt) override;

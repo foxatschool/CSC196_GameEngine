@@ -11,13 +11,15 @@ public:
 	float fireTimer = 0.0f;
 	int bulletCount = 5;
 
+	shovel::RigidBody* m_rigidBody{ nullptr };
+
 public:
 	Player() = default;
 	CLASS_PROTOTYPE(Player)
 
 	void Shoot();
 
-
+	void Start() override;
 	void Update(float dt) override;
 	void Read(const shovel::json::value_t& value) override;
 private:

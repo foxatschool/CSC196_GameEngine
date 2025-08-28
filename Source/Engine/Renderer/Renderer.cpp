@@ -9,12 +9,12 @@ namespace shovel
 		// Initialize SDL and TTF
         if (!SDL_Init(SDL_INIT_VIDEO))
         {
-            std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
+            Logger::Error("SDL_Init Error: {}", SDL_GetError());
             return false;
         }
 
         if (!TTF_Init()) {
-            std::cerr << "TTF_Init Error: " << SDL_GetError() << std::endl;
+            Logger::Error("TTF_Init Error: {}", SDL_GetError());
             return false;
         }
 
@@ -39,7 +39,7 @@ namespace shovel
 		// Check if the window was created successfully
         if (m_window == nullptr)
         {
-            std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+            Logger::Error("SDL_CreateWindow Error: {}", SDL_GetError());
             SDL_Quit();
             return false;
         }
@@ -48,30 +48,17 @@ namespace shovel
 		// Check if the renderer was created successfully
         if (m_renderer == nullptr)
         {
-            std::cerr << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+            Logger::Error("SDL_CreateRenderer Error: {}", SDL_GetError());
             SDL_DestroyWindow(m_window);
             SDL_Quit();
             return false;
         }
 
+        SDL_SetRenderVSync(m_renderer, 1);
 		// Set the logical size of the renderer
         SDL_SetRenderLogicalPresentation(m_renderer, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
         return true;
     }
-
-  //  void Renderer::DrawTexture(Texture& texture, float x, float y)
-  //  {
-		//vec2 size = texture.GetSize();
-
-  //          SDL_FRect destRect;
-  //      destRect.x = x;
-  //      destRect.y = y;
-  //      destRect.w = texture.GetSize().x;
-  //      destRect.h = texture.GetSize().y;
-
-  //      // https://wiki.libsdl.org/SDL3/SDL_RenderTexture
-  //      SDL_RenderTexture(m_renderer, texture.m_texture, NULL, &destRect);
-  //  }
 
     void Renderer::SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
     {

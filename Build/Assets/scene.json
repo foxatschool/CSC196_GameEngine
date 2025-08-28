@@ -15,7 +15,7 @@
                 {
                     "type": "Player",
                     "speed": 500,
-                    "rotationRate": 150.0,
+                    "rotationRate": 100.0,
                     "fireTimer": 0.2
                 },
                 {
@@ -24,11 +24,8 @@
                 },
                 {
                     "type": "Rigidbody",
-                    "damping": 1.0,
-                    "velovity": [
-                        0,
-                        0
-                    ]
+                    "gravityScale": 0,
+                    "angularDamping" : 2.0
                 },
                 {
                     "type": "CircleCollider2D",
@@ -50,8 +47,8 @@
             "components": [
                 {
                     "type": "Enemy",
-                    "speed": 400.0,
-                    "rotationRate": 100.0,
+                    "speed": 0,
+                    "rotationRate": 20.0,
                     "fireTimer": 0.2
                 },
                 {
@@ -60,11 +57,37 @@
                 },
                 {
                     "type": "Rigidbody",
-                    "damping": 1.0,
-                    "velovity": [
-                        0,
-                        0
-                    ]
+                    "gravityScale" : 0
+                },
+                {
+                    "type": "CircleCollider2D",
+                    "radius": 60.0
+                }
+            ]
+        },
+
+        {
+            "name": "rocket",
+            "transform": {
+                "position": [
+                    640,
+                    512
+                ],
+                "scale": 0.05
+            },
+            "components": [
+                {
+                    "type": "Rocket",
+                    "speed": 700.0
+                },
+                {
+                    "type": "SpriteRenderer",
+                    "texture_name": "textures/Rocket_01.png"
+                },
+                {
+                    "type": "Rigidbody",
+                    "gravityscale": 0,
+                    "isSensor" :  true
                 },
                 {
                     "type": "CircleCollider2D",
@@ -73,6 +96,7 @@
             ]
         }
     ],
+
     "actors": [
         {
             "name": "sprite",

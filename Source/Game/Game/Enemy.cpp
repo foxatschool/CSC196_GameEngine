@@ -36,7 +36,9 @@ void Enemy::Update(float dt)
         shovel::vec2 forward = shovel::vec2{ 1,0 }.Rotate(shovel::math::degTorad(owner->transform.rotation));
 		float angle = shovel::vec2::SignedAngleBetween(direction, forward);
         angle = shovel::math::sign(angle);
-        owner->transform.rotation += shovel::math::radToDeg(angle * 5 * dt);
+
+        m_rigidBody->ApplyTorque(angle * 5);
+        //owner->transform.rotation += shovel::math::radToDeg(angle * 5 * dt);
 
 		angle = shovel::math::radToDeg(shovel::vec2::AngleBetween(direction, forward));
         playerseen = angle < 30;
@@ -44,9 +46,10 @@ void Enemy::Update(float dt)
     shovel::vec2 force = shovel::vec2{ 1,0 }.Rotate(shovel::math::degTorad(owner->transform.rotation)) * speed;
 
 	//velocity += force * dt; // Apply the force to the enemy's velocity
-    if (m_rigidBody)
+    auto* rb = owner->GetComponent<shovel::RigidBody>();
+    if (rb)
     {
-        m_rigidBody->velocity += force * dt;
+        //rb->ApplyForce(force);
     }
 
     owner->transform.position.x = shovel::math::wrap(owner->transform.position.x, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
@@ -98,14 +101,6 @@ void Enemy::Read(const shovel::json::value_t& value)
     JSON_READ(value, speed);
     JSON_READ(value, fireTime);
 }
-void Enemy::OnCollision(shovel::Actor* other)
-{
-    if (owner->tag != other->tag)
-    {
-        owner->destroyed = true;
-        EVENT_NOTIFY_DATA(add_points, 100);
-    }
-}
 void Enemy::OnNotify(const shovel::Event& event)
 {
 
@@ -115,21 +110,21 @@ void Enemy::OnNotify(const shovel::Event& event)
         owner->destroyed = true;
     }
 }
-//void Enemy::OnCollision(shovel::Actor* other)
-//{
-//    if (owner->tag != other->tag)
-//    {
-//        shovel::Logger::Debug("Enemy Hit");
-//        owner->destroyed = true;
-//		owner->scene->GetGame()->AddPoints(500);
-//        for (int i = 0; i < 100; i++)
-//        {
-//            shovel::Particle particle;
-//            particle.position = owner->transform.position;
-//			particle.velocity = shovel::random::onUnitCircle() * shovel::random::getReal(10.0f, 200.0f);
-//            particle.velocity = shovel::vec2{ shovel::random::getReal(-200.0f, 200.0f), shovel::random::getReal(-200.0f, 200.0f) };
-//            particle.color = shovel::vec3{ 1, 1, 1 };
-//            particle.lifetime = 2;
-//        }
-//    }
-//}
+void Enemy::OnCollision(shovel::Actor* other)
+{
+    if (owner->tag != other->tag)
+    {
+        shovel::Logger::Debug("Enemy Hit");
+        owner->destroyed = true;
+        EVENT_NOTIFY_DATA(add_points, 100);
+        for (int i = 0; i < 100; i++)
+        {
+            shovel::Particle particle;
+            particle.position = owner->transform.position;
+			particle.velocity = shovel::random::onUnitCircle() * shovel::random::getReal(10.0f, 200.0f);
+            particle.velocity = shovel::vec2{ shovel::random::getReal(-200.0f, 200.0f), shovel::random::getReal(-200.0f, 200.0f) };
+            particle.color = shovel::vec3{ 1, 1, 1 };
+            particle.lifetime = 2;
+        }
+    }
+}

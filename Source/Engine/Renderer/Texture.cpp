@@ -18,7 +18,7 @@ namespace shovel
 		SDL_Surface* surface = IMG_Load(filename.c_str());
 		if (!surface)
 		{
-			std::cerr << "Failed to load texture: " << filename << std::endl;
+			Logger::Error("Failed to load texture: {}", filename);
 			return false;
 		}
 
@@ -30,7 +30,7 @@ namespace shovel
 
 		if (!m_texture)
 		{
-			std::cerr << "Could not create texture: " << filename << std::endl;
+			Logger::Error("Could not create texture: {}", filename);
 			return false;
 		}
 		else

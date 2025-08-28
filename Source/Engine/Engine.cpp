@@ -24,6 +24,9 @@ namespace shovel
 		m_particleSystem = std::make_unique<shovel::ParticleSystem>();
 		m_particleSystem->Initialize();
 
+		m_physics = std::make_unique<Physics>();
+		m_physics->Initialize();
+
 		return true;
 	}
 
@@ -33,6 +36,7 @@ namespace shovel
 		m_time.Tick();
 		m_input->Update();
 		m_audio->Update();
+		m_physics->Update(m_time.GetDeltaTime());
 	}
 
 	void Engine::Shutdown()
@@ -47,7 +51,7 @@ namespace shovel
 		m_renderer->ShutDown();
 		m_input->Shutdown();
 		m_audio->ShutDown();
-
+		m_physics->Shutdown();
 	}
 
 	void Engine::Draw()
