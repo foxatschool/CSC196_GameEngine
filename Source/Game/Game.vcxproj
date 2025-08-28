@@ -203,6 +203,9 @@
     <ClCompile Include="Game\Rocket.cpp" />
     <ClCompile Include="Game\SpaceGame.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Platformer\EnemyController.cpp" />
+    <ClCompile Include="Platformer\Platformer.cpp" />
+    <ClCompile Include="Platformer\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameData.h" />
@@ -211,11 +214,16 @@
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\Rocket.h" />
     <ClInclude Include="Game\SpaceGame.h" />
+    <ClInclude Include="Platformer\EnemyController.h" />
+    <ClInclude Include="Platformer\PlatformerGame.h" />
+    <ClInclude Include="Platformer\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Build\Assets\Meshes\Enemy.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Build\Assets\PlatFormer\Scenes\level.json" />
+    <None Include="..\..\Build\Assets\PlatFormer\Scenes\prototype.json" />
     <None Include="..\..\Build\Assets\scene.json" />
   </ItemGroup>
   <ItemGroup>

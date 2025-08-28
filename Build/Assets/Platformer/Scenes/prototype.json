@@ -1,0 +1,76 @@
+{
+    "prototypes": [
+        {
+            "name": "platformPlayer",
+            "tag": "player",
+            "transform": {
+                "position": [
+                    640,
+                    512
+                ],
+                "rotation": 270,
+                "scale": 0.2
+            },
+            "components": [
+                {
+                    "type": "PlayerController",
+                    "speed": 500,
+                    "rotationRate": 100.0,
+                    "fireTimer": 0.2
+                },
+                {
+                    "type": "SpriteRenderer",
+                    "texture_name": "textures/box.png"
+                },
+                {
+                    "type": "Rigidbody",
+                    "gravityScale": 0,
+                    "angularDamping": 2.0
+                },
+                {
+                    "type": "RigidBody",
+                    "gravityscale": 1.0,
+                    "constrainAngle": true,
+                    "shape": "capsule",
+                    "scale": [ 1, 1 ]
+                }
+            ]
+        },
+        {
+            "name": "platformenemy",
+            "tag": "enemy",
+            "transform": {
+                "position": [
+                    640,
+                    512
+                ],
+                "rotation": 270,
+                "scale": 0.2
+            },
+            "components": [
+                {
+                    "type": "EnemyController",
+                    "speed": 500,
+                    "rotationRate": 100.0,
+                    "fireTimer": 0.2
+                },
+                {
+                    "type": "SpriteRenderer",
+                    "texture_name": "textures/box.png"
+                },
+                {
+                    "type": "Rigidbody",
+                    "gravityScale": 0,
+                    "angularDamping": 2.0
+                },
+                {
+                    "type": "RigidBody",
+                    "gravityscale": 1.0,
+                    "constrainAngle": true,
+                    "shape": "circle",
+                    "scale": [ 1, 1 ]
+                }
+            ]
+        }
+    ]
+}

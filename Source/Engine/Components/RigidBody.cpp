@@ -59,7 +59,7 @@ namespace shovel
 		Object::Read(value);
 
 		JSON_READ(value, size);
-		//JSON_READ(value, scale);
+		JSON_READ(value, scale);
 
 
 		JSON_READ_NAME(value, "gravityScale", bodyDef.gravityScale);

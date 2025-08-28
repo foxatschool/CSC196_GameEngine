@@ -5,62 +5,95 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{44c42eae-959b-4d02-ab64-18d280735ad5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>{36727eae-7184-4dd2-b95c-bb41621d0658}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Space">
+      <UniqueIdentifier>{6a63b010-684d-42c7-9836-2775d8b02fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Platformer">
+      <UniqueIdentifier>{0a5503d9-c046-4f44-92a0-e87b0af621f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Platformer">
+      <UniqueIdentifier>{9a89d2a5-e776-4546-9a22-0daebe64abef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Space">
+      <UniqueIdentifier>{44c42eae-959b-4d02-ab64-18d280735ad5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Enemy.cpp">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClCompile>
     <ClCompile Include="Game\Player.cpp">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Game\SpaceGame.cpp">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClCompile>
     <ClCompile Include="GameDada.cpp">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClCompile>
     <ClCompile Include="Game\Rocket.cpp">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClCompile>
     <ClCompile Include="GamePCH.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Platformer\Platformer.cpp">
+      <Filter>Source\Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer\PlayerController.cpp">
+      <Filter>Source\Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer\EnemyController.cpp">
+      <Filter>Source\Platformer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Player.h">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClInclude>
     <ClInclude Include="Game\Enemy.h">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClInclude>
     <ClInclude Include="Game\SpaceGame.h">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClInclude>
     <ClInclude Include="GameData.h">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClInclude>
     <ClInclude Include="Game\Rocket.h">
-      <Filter>Game</Filter>
+      <Filter>Source\Space</Filter>
     </ClInclude>
     <ClInclude Include="GamePCH.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Platformer\PlatformerGame.h">
+      <Filter>Source\Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="Platformer\PlayerController.h">
+      <Filter>Source\Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="Platformer\EnemyController.h">
+      <Filter>Source\Platformer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Build\Assets\Meshes\Enemy.txt">
-      <Filter>Assets</Filter>
+      <Filter>Assets\Space</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Build\Assets\scene.json">
-      <Filter>Assets</Filter>
+      <Filter>Assets\Space</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\PlatFormer\Scenes\level.json">
+      <Filter>Assets\Platformer</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\PlatFormer\Scenes\prototype.json">
+      <Filter>Assets\Platformer</Filter>
     </None>
   </ItemGroup>
 </Project>
