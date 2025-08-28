@@ -50,6 +50,7 @@ void Enemy::Update(float dt)
     if (rb)
     {
         //rb->ApplyForce(force);
+
     }
 
     owner->transform.position.x = shovel::math::wrap(owner->transform.position.x, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
