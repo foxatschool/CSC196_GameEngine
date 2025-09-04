@@ -28,7 +28,8 @@ namespace shovel
 		int GetHeight() const { return m_height; }
 
 		void DrawTexture(Texture& texture, float x, float y);
-		void DrawTexture(Texture& texture, float x, float y, float angle, float scale);
+		void DrawTexture(Texture& texture, float x, float y, float angle, float scale, bool flipH = false);
+		void DrawTexture(class Texture& texture, const rect& sourceRect, float x, float y, float angle, float scale = 1, bool flipH = false);
 
 	private:
 

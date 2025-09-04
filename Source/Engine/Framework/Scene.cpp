@@ -42,18 +42,6 @@ namespace shovel {
 				return (actor->destroyed);
 		});
 
-		//for (auto iter = m_actors.begin(); iter != m_actors.end();)
-		//{
-		//	if ((*iter)->destroyed)
-		//	{
-		//		iter = m_actors.erase(iter); // Remove the actor if it is marked as destroyed
-		//	}
-		//	else
-		//	{
-		//		++iter; // Move to the next actor
-		//	}
-		//}
-
 		for (auto& actorA : m_actors)
 		{
 			for (auto& actorB : m_actors)

@@ -25,7 +25,7 @@ void Rocket::Update(float dt)
 	owner->transform.position.x = shovel::math::wrap(owner->transform.position.x, 0.0f, (float)shovel::GetEngine().GetRenderer().GetWidth());
 	owner->transform.position.y = shovel::math::wrap(owner->transform.position.y, 0.0f, (float)shovel::GetEngine().GetRenderer().GetHeight());
 
-	float angle = owner->transform.rotation; + shovel::random::getReal(-60.0f, 60.0f);
+	float angle = owner->transform.rotation + shovel::random::getReal(-60.0f, 60.0f);
 	shovel::vec2 velocity = shovel::vec2{ 1, 0 }.Rotate(shovel::math::degTorad(owner->transform.rotation));
 	velocity *= shovel::random::getReal(100.0f, 200.0f);
 
@@ -44,6 +44,5 @@ void Rocket::OnCollision(shovel::Actor* other)
 	{
 		owner->destroyed = true;
 	}
-	std::cout << other->tag << std::endl;
 	shovel::Logger::Debug("Rocket Hit {}", other->tag);
 }

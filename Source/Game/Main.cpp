@@ -67,3 +67,15 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
+/*
+**** How-To's ****
+* Animation
+* Switching Animation: owner->GetComponent<shovel::Animator>()->Play("<animation name>");
+-------------------------------------
+* Pickups
+* auto varname = shovel::Instantiate("<name of thing in json>");
+* m_scene->AddActor(std::move(varname));
+-------------------------------------
+* 
+*/

@@ -85,7 +85,7 @@ namespace shovel
         SDL_RenderTexture(m_renderer, texture.m_texture, NULL, &destRect);
     }
 
-    void Renderer::DrawTexture(Texture& texture, float x, float y, float angle, float scale)
+    void Renderer::DrawTexture(Texture& texture, float x, float y, float angle, float scale, bool flipH)
     {
         vec2 size = texture.GetSize();
 
@@ -95,7 +95,7 @@ namespace shovel
         destRect.x = x - destRect.w * 0.5f;
         destRect.y = y - destRect.h * 0.5f;
 
-		SDL_RenderTextureRotated(m_renderer, texture.m_texture, NULL, &destRect, angle, NULL, SDL_FLIP_NONE);
+		SDL_RenderTextureRotated(m_renderer, texture.m_texture, NULL, &destRect, angle, NULL,(flipH ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE));
     }
 
     void Renderer::Clear()
@@ -115,5 +115,22 @@ namespace shovel
     void Renderer::DrawPoint(float x, float y)
     {
 		SDL_RenderPoint(m_renderer, x, y);
+    }
+
+    void Renderer::DrawTexture(Texture& texture, const rect& sourceRect, float x, float y, float angle, float scale, bool flipH) {
+        // convert rect to SDL_FRect
+        SDL_FRect srcRect;
+        srcRect.x = sourceRect.x;
+        srcRect.y = sourceRect.y;
+        srcRect.w = sourceRect.w;
+        srcRect.h = sourceRect.h;
+
+        SDL_FRect destRect;
+        destRect.w = srcRect.w * scale;
+        destRect.h = srcRect.h * scale;
+        destRect.x = x - destRect.w * 0.5f;
+        destRect.y = y - destRect.h * 0.5f;
+
+        SDL_RenderTextureRotated(m_renderer, texture.m_texture, &srcRect, &destRect, angle, NULL, (flipH ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE));
     }
 }

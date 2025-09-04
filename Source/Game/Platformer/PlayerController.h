@@ -13,6 +13,13 @@ public:
 	float fireTimer = 0.0f;
 	int bulletCount = 5;
 
+	enum class CollisonTag
+	{
+		Ground,
+		Noting
+	};
+	CollisonTag collisionTag = CollisonTag::Noting;
+
 	shovel::RigidBody* m_rigidBody{ nullptr };
 
 public:

@@ -1,0 +1,61 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "tilemap.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "GoodTilemap.tmx": {
+            "scale": 3,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 240.16666666666663,
+                "y": 159.83333333333334
+            }
+        },
+        "tilemap.json": {
+            "scale": 2.7272916666666664,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 243.64830799786117,
+                "y": 149.23229699793754
+            }
+        },
+        "tilemap.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 2
+        },
+        "tileset.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1.5
+        }
+    },
+    "last.exportedFilePath": "C:/WorkSpace/Game Engine/CSC196_GameEngine/Build/Assets/Platformer/Tilemaps",
+    "last.imagePath": "C:/WorkSpace/Game Engine/CSC196_GameEngine/Build/Assets/Platformer/Tilemaps",
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "GoodTilemap.tmx",
+        "tileset.tsx",
+        "tilemap.json",
+        "tilemap.tsx"
+    ],
+    "project": "Tilemap_01.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "GoodTilemap.tmx",
+        "tileset.tsx",
+        "tilemap.tsx",
+        "tilemap.json"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

@@ -28,13 +28,14 @@ namespace shovel
 				size = spriteRenderer->texture->GetSize();
 			}
 		}
-		m_PhysicsBody = std::make_unique<PhysicsBody>(owner->transform, size, bodyDef, GetEngine().GetPhysics());
+		m_PhysicsBody = std::make_unique<PhysicsBody>(owner->transform, size * scale, bodyDef, GetEngine().GetPhysics());
 	}
 
 	void shovel::RigidBody::Update(float dt)
 	{
 		owner->transform.position = m_PhysicsBody->GetPosistion();
 		owner->transform.rotation = math::radToDeg(m_PhysicsBody->GetAngle());
+		velocity = m_PhysicsBody->GetVelocity();
 		//owner->transform.position += velocity * dt; // Update position based on velocity
 		//velocity *= (1.0f / (1.0f + (damping * dt))); // Apply damping to velocity
 	}

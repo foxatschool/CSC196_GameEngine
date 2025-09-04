@@ -16,7 +16,7 @@ namespace shovel
 		RigidBody() = default;
 		RigidBody(const RigidBody& other);
 
-		CLASS_PROTOTYPE(RigidBody)\
+		CLASS_PROTOTYPE(RigidBody)
 
 		void Start() override;
 		void Update(float dt);

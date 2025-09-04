@@ -16,7 +16,7 @@ namespace shovel
 		struct PhysicsBodyDef
 		{
 			// body
-			float gravityScale = 1;
+			float gravityScale = 0;
 			float linearDamping = 0.2f;
 			float angularDamping = 0.2f;
 			bool  constrainAngle = false;
@@ -46,5 +46,6 @@ namespace shovel
 		void SetVelovcity(const vec2& velocity);
 		
 		b2BodyId m_bodyId{ b2_nullBodyId };
+		vec2 GetVelocity();
 	};
 }

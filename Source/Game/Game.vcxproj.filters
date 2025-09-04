@@ -20,6 +20,9 @@
     <Filter Include="Source\Space">
       <UniqueIdentifier>{44c42eae-959b-4d02-ab64-18d280735ad5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Platformer\PlayerAnim">
+      <UniqueIdentifier>{4640f0e2-7caf-457c-8e9d-c73755989547}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Enemy.cpp">
@@ -41,13 +44,19 @@
     <ClCompile Include="GamePCH.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Platformer\Platformer.cpp">
+    <ClCompile Include="Platformer\PlatformerGame.cpp">
       <Filter>Source\Platformer</Filter>
     </ClCompile>
     <ClCompile Include="Platformer\PlayerController.cpp">
       <Filter>Source\Platformer</Filter>
     </ClCompile>
     <ClCompile Include="Platformer\EnemyController.cpp">
+      <Filter>Source\Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer\FlyingEnemyController.cpp">
+      <Filter>Source\Platformer</Filter>
+    </ClCompile>
+    <ClCompile Include="Platformer\Pickup.cpp">
       <Filter>Source\Platformer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -79,6 +88,12 @@
     <ClInclude Include="Platformer\EnemyController.h">
       <Filter>Source\Platformer</Filter>
     </ClInclude>
+    <ClInclude Include="Platformer\FlyingEnemyController.h">
+      <Filter>Source\Platformer</Filter>
+    </ClInclude>
+    <ClInclude Include="Platformer\Pickup.h">
+      <Filter>Source\Platformer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\Build\Assets\Meshes\Enemy.txt">
@@ -94,6 +109,27 @@
     </None>
     <None Include="..\..\Build\Assets\PlatFormer\Scenes\prototype.json">
       <Filter>Assets\Platformer</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Platformer\Tilemaps\tilemap.json">
+      <Filter>Assets\Platformer</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Platformer\Animations\bat_idle.json">
+      <Filter>Assets\Platformer</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Platformer\Animations\coin.json">
+      <Filter>Assets\Platformer</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Platformer\Animations\PlayerAnim\Idle.json">
+      <Filter>Assets\Platformer\PlayerAnim</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Platformer\Animations\PlayerAnim\walk.json">
+      <Filter>Assets\Platformer\PlayerAnim</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Platformer\Animations\PlayerAnim\run.json">
+      <Filter>Assets\Platformer\PlayerAnim</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Platformer\Animations\PlayerAnim\jump.json">
+      <Filter>Assets\Platformer\PlayerAnim</Filter>
     </None>
   </ItemGroup>
 </Project>
