@@ -44,24 +44,24 @@ namespace shovel
 		}
 
 		//End Contact
-		for (int i = 0; i < contactEvents.endCount; i++)
-		{
-			b2ContactEndTouchEvent* contactEvent = contactEvents.endEvents + i;
+		//for (int i = 0; i < contactEvents.endCount; i++)
+		//{
+		//	b2ContactEndTouchEvent* contactEvent = contactEvents.endEvents + i;
 
-			if (!b2Shape_IsValid(contactEvent->shapeIdA) || !b2Shape_IsValid(contactEvent->shapeIdB)) continue;
+		//	if (!b2Shape_IsValid(contactEvent->shapeIdA) || !b2Shape_IsValid(contactEvent->shapeIdB)) continue;
 
-			b2BodyId bodyA = b2Shape_GetBody(contactEvent->shapeIdA);
-			b2BodyId bodyB = b2Shape_GetBody(contactEvent->shapeIdB);
+		//	b2BodyId bodyA = b2Shape_GetBody(contactEvent->shapeIdA);
+		//	b2BodyId bodyB = b2Shape_GetBody(contactEvent->shapeIdB);
 
-			Actor* actorA = (Actor*)b2Body_GetUserData(bodyA);
-			if (!actorA || actorA->destroyed || !actorA->active) continue;
+		//	Actor* actorA = (Actor*)b2Body_GetUserData(bodyA);
+		//	if (!actorA || actorA->destroyed || !actorA->active) continue;
 
-			Actor* actorB = (Actor*)b2Body_GetUserData(bodyB);
-			if (!actorA || actorB->destroyed || !actorB->active) continue;
+		//	Actor* actorB = (Actor*)b2Body_GetUserData(bodyB);
+		//	if (!actorA || actorB->destroyed || !actorB->active) continue;
 
-			actorA->OnCollision(actorB);
-			actorB->OnCollision(actorA);
-		}
+		//	actorA->OnCollision(actorB);
+		//	actorB->OnCollision(actorA);
+		//}
 
 		//Sensor Contact
 		b2SensorEvents sensorEvents = b2World_GetSensorEvents(m_worldId);

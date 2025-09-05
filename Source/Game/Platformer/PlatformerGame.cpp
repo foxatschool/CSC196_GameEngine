@@ -38,12 +38,18 @@ void PlatformerGame::Update(float dt)
         break;
     case PlatformerGame::GameState::StartRound:
     {
+        
         SpawnPlayer();
         m_gameState = GameState::Game;
     }
         break;
     case PlatformerGame::GameState::Game:
     {
+		if(!m_scene->GetActorByName<shovel::Actor>("PlatformPlayer"))
+		{
+			m_gameState = GameState::PlayerDead;
+			break;
+		}
 		m_enemySpawnTimer += dt;
 		if (m_enemySpawnTimer >= 2.0f)
 		{
@@ -116,6 +122,5 @@ void PlatformerGame::SpawnEnemy()
 void PlatformerGame::SpawnPlayer()
 {
     auto player = shovel::Instantiate("platformPlayer");
-    //player->transform.position = shovel::vec2{shovel::random::getReal(0, 1000), }, 
     m_scene->AddActor(std::move(player));
 }

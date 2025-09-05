@@ -29,5 +29,9 @@ void FlyingEnemyController::Read(const shovel::json::value_t& value)
 
 void FlyingEnemyController::OnCollision(class shovel::Actor* other)
 {
-
+	if (shovel::equalsIgnoreCase(other->name, "attackBox"))
+	{
+		owner->destroyed = true;
+		shovel::Logger::Debug("Bat Destroyed");
+	}
 }

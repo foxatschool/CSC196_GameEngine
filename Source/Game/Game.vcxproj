@@ -228,6 +228,7 @@
   <ItemGroup>
     <None Include="..\..\Build\Assets\Platformer\Animations\bat_idle.json" />
     <None Include="..\..\Build\Assets\Platformer\Animations\coin.json" />
+    <None Include="..\..\Build\Assets\Platformer\Animations\PlayerAnim\attack.json" />
     <None Include="..\..\Build\Assets\Platformer\Animations\PlayerAnim\Idle.json" />
     <None Include="..\..\Build\Assets\Platformer\Animations\PlayerAnim\jump.json" />
     <None Include="..\..\Build\Assets\Platformer\Animations\PlayerAnim\run.json" />

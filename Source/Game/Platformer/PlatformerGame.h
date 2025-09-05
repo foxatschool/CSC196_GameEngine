@@ -36,6 +36,7 @@ public:
 	void SpawnEnemy();
 	void SpawnPlayer();
 
+	int lives{ 3 };
 private:
 
 

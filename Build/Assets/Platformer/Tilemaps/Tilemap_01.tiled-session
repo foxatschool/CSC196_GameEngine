@@ -17,11 +17,11 @@
             }
         },
         "tilemap.json": {
-            "scale": 2.7272916666666664,
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 243.64830799786117,
-                "y": 149.23229699793754
+                "x": 672.5,
+                "y": 412.5
             }
         },
         "tilemap.tsx": {

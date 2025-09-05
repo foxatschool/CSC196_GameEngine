@@ -9,6 +9,7 @@ int main(int argc, char* argv[]) {
     shovel::Logger::Info("Initalizing Engine .  .   .");
 
     // Iinitalize Game
+	//std::unique_ptr<PlatformerGame> game = std::make_unique<PlatformerGame>();
 	std::unique_ptr<PlatformerGame> game = std::make_unique<PlatformerGame>();
     game->Initialize();
 

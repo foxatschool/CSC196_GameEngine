@@ -13,7 +13,7 @@ void EnemyController::Update(float dt)
 	if (player->transform.position.x < owner->transform.position.x) dir = -1;
 	else dir = 1;
 
-	m_rigidBody->ApplyForce(shovel::vec2{ 0,1 } * dir * 1000);
+	m_rigidBody->ApplyForce(shovel::vec2{ 0,1 } * dir * 10);
 }
 void EnemyController::Read(const shovel::json::value_t& value)
 {

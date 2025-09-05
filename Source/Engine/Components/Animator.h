@@ -25,6 +25,8 @@ namespace shovel {
 
 		const std::string& GetCurrentAnimationName() const { return m_currentAnimationName; }
 
+		int GetEndFrame() {return m_currentAnimation.textureAnimation->GetTotalFrames() - 1; }
+
 		void Read(const json::value_t& value) override;
 	private:
 		float m_frameTimer = 0;

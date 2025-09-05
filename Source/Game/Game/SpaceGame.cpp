@@ -88,7 +88,11 @@ void SpaceGame::Update(float dt)
 		{
             m_lives--;
         
-            if (m_lives == 0) GameState::GameOver;
+            if (m_lives == 0)
+            {
+                GameState::GameOver;
+                break;
+            }
             else
             {
 			    m_gameState = GameState::StartRound;

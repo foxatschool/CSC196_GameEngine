@@ -4,12 +4,14 @@
 
 namespace shovel
 {
+
 	FACTORY_REGISTER(RigidBody)
 
 	RigidBody::RigidBody(const RigidBody& other)
 	{
 		bodyDef = other.bodyDef;
 		size = other.size;
+		scale = other.scale;
 
 		if (other.m_PhysicsBody)
 		{
@@ -29,7 +31,7 @@ namespace shovel
 			}
 		}
 		m_PhysicsBody = std::make_unique<PhysicsBody>(owner->transform, size * scale, bodyDef, GetEngine().GetPhysics());
-	}
+	}//TODO: offset transform
 
 	void shovel::RigidBody::Update(float dt)
 	{

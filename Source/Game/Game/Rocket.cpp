@@ -43,6 +43,7 @@ void Rocket::OnCollision(shovel::Actor* other)
 	if (owner->tag != other->tag)
 	{
 		owner->destroyed = true;
+		other->destroyed = true;
 	}
 	shovel::Logger::Debug("Rocket Hit {}", other->tag);
 }

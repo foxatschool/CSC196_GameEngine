@@ -49,7 +49,7 @@ void Enemy::Update(float dt)
     auto* rb = owner->GetComponent<shovel::RigidBody>();
     if (rb)
     {
-        //rb->ApplyForce(force);
+        rb->ApplyForce(force);
 
     }
 
